@@ -10,6 +10,6 @@ public class MonsterSlime extends Monster {
 	public int skill(Unit target) {
 		int heal = this.getOffensivePower() * 3;
 		this.setCurHp(heal);
-		return 0;
+		return heal;
 	}
 }
