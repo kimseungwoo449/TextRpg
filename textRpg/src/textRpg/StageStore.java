@@ -6,7 +6,7 @@ public class StageStore extends Stage {
 	private final int POTION = 2;
 
 	private StageStore() {
-
+		super("상점");
 	}
 
 	public static StageStore getInstance() {
@@ -15,7 +15,7 @@ public class StageStore extends Stage {
 
 	@Override
 	public void printMenu() {
-		Color.greenPrintln("---------- 상점 ----------");
+		Color.greenPrintln("---------- " + this.getStageName() + " ----------");
 		Color.greenPrintln("---------- 목록 ----------");
 		Color.greenPrintln("[1] 폭탄 [700원]");
 		Color.greenPrintln("[2] 포션 [200원]");
@@ -39,6 +39,5 @@ public class StageStore extends Stage {
 
 		return item;
 	}
-	
-	
+
 }
