@@ -3,12 +3,14 @@ package textRpg;
 import java.util.ArrayList;
 
 public class UserManager {
+	public static int log;
 	private static UserManager instance = new UserManager();
 	private ColorPrint color = ColorPrint.getInstance();
 	
 	private ArrayList<User> users;
 	
 	private UserManager() {
+		log = -1;
 		users = new ArrayList<User>();
 	}
 	
@@ -56,5 +58,23 @@ public class UserManager {
 		color.greenPrintln("탈퇴 완료.");
 	}
 	
+	public void login() {
+		String id = GameManager.inputString("ID");
+		String password = GameManager.inputString("PASSWORD");
+		
+		int userIndex = findUserIndexById(id);
+		
+		if(userIndex==-1||!users.get(userIndex).getPassword().equals(password)) {
+			color.redPrintln("ID 혹은 PASSWORD를 재확인 해주세요.");
+			return;
+		}
+		
+		log = userIndex;
+		color.greenPrintln("로그인 완료.");
+	}
 	
+	public void logout() {
+		log = -1;
+		color.greenPrintln("로그아웃 완료.");
+	}
 }
