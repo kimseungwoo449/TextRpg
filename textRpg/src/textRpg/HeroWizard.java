@@ -3,7 +3,7 @@ package textRpg;
 public class HeroWizard extends Hero{
 
 	public HeroWizard( int grade) {
-		super("마법사", 600, 50, grade);
+		super("마법사", 500, 50, grade);
 	}
 
 	@Override
