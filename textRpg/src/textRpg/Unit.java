@@ -28,13 +28,13 @@ abstract public class Unit {
 			target.isDead = true;
 		}
 	}
-	
+
 	public void takeDamage(int attack) {
 		this.curHp -= attack;
-		
+
 		checkIsDead(this);
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
@@ -49,6 +49,24 @@ abstract public class Unit {
 
 	public int getOffensivePower() {
 		return this.offensivePower;
+	}
+
+	public void setOffensivePower(int grade) {
+		set(grade,this.offensivePower);
+	}
+
+	private void set(int grade, int myAbility) {
+		if (grade == 1)
+			return;
+		else if (grade == 2)
+			myAbility *= 1.5;
+		else if (grade == 3)
+			myAbility *= 2;
+	}
+
+	public void setMaxHp(int grade) {
+		set(grade,this.maxHp);
+		this.curHp = this.maxHp;
 	}
 	
 	abstract public int skill(Unit target);
