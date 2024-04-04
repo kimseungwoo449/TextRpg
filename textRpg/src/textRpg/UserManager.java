@@ -102,40 +102,72 @@ public class UserManager {
 		}
 
 		printBuyHeroMessage(newHero);
-		
+
 	}
-	
+
 	private void printBuyHeroMessage(Hero newHero) {
 		if (newHero instanceof HeroWarrior)
-			color.cyanPrintln(printHero(newHero)+" 등장!");
+			color.cyanPrintln(printHero(newHero) + " 등장!");
 		else if (newHero instanceof HeroWizard)
-			color.purplePrintln(printHero(newHero)+" 등장!");
+			color.purplePrintln(printHero(newHero) + " 등장!");
 		else if (newHero instanceof HeroPaladin)
-			color.bluePrintln(printHero(newHero)+" 등장!");
+			color.bluePrintln(printHero(newHero) + " 등장!");
 		else if (newHero instanceof HeroPrist)
-			color.yellowPrintln(printHero(newHero)+" 등장!");
+			color.yellowPrintln(printHero(newHero) + " 등장!");
 	}
-	
+
 	private String printHero(Hero hero) {
 		int grade = hero.getGrade();
 		String star = grade == 1 ? "★" : grade == 2 ? "★★" : "★★★";
-		
-		String info = String.format("[%s] [%s]", star,hero.getName());
+
+		String info = String.format("[%s] [%s]", star, hero.getName());
 		return info;
 	}
-	
+
 	public void sellHero() {
 		User user = users.get(log);
-		
+
 		user.showMyHero();
 		int sellIndex = GameManager.inputNumber("판매할 영웅");
-		
-		if(!user.sellHero(sellIndex)) {
+
+		if (!user.sellHero(sellIndex)) {
 			color.redPrintln("인덱스 재확인");
 			return;
 		}
-		
+
 		String info = String.format("판매완료. 현재 소지금 %d원", user.getCash());
 		color.greenPrintln(info);
 	}
+
+	public void organizeParty() {
+		User user = users.get(log);
+
+		int[] heroIndex = new int[] { -1, -1, -1 };
+
+		user.showMyHero();
+		color.greenPrintln("[파티의 인원은 3명입니다.]");
+		for (int i = 0; i < heroIndex.length; i++) {
+			int index = GameManager.inputNumber("선택 " + (i + 1)) - 1;
+
+			if (index >= user.getMyHeroSize() || index < 0 || checkIndex(heroIndex, index)) {
+				color.redPrintln("인덱스 입력이 잘못되었거나, 이미 동일한 영웅이 선택되었습니다.");
+				i--;
+				continue;
+			}
+			
+			heroIndex[i]=index;
+		}
+		user.addParty(heroIndex);
+		
+		color.greenPrintln("파티 조직 완료.");
+	}
+
+	private boolean checkIndex(int[] heroIndex, int index) {
+		for (int j = 0; j < heroIndex.length; j++) {
+			if (heroIndex[j] == index)
+				return true;
+		}
+		return false;
+	}
+
 }

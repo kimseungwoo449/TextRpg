@@ -37,6 +37,10 @@ public class User {
 		return this.cash;
 	}
 	
+	public int getMyHeroSize() {
+		return this.myHero.size();
+	}
+	
 	public String getPassword() {
 		return this.password;
 	}
@@ -99,7 +103,15 @@ public class User {
 		}
 	}
 
-	public void addParty(ArrayList<Hero> party) {
+	public void addParty(int[] indexArray) {
+		ArrayList<Hero> party = new ArrayList<Hero>();
+		
+		for(int i =0;i<indexArray.length;i++) {
+			int heroIndex = indexArray[i];
+			Hero targetHero = myHero.get(heroIndex);
+			party.add(targetHero);
+		}
+		
 		this.parties.put(partyNumber++, party);
 	}
 
