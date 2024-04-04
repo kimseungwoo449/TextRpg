@@ -3,7 +3,14 @@ package textRpg;
 import java.util.Scanner;
 
 public class GameManager {
+	public static boolean isRun;
 	public static Scanner sc = new Scanner(System.in);
+	
+	private StageTitle title = StageTitle.getInstance();
+	
+	public GameManager() {
+		this.isRun = true;
+	}
 	
 	public static int inputNumber(String message) {
 		int number = -1;
@@ -22,7 +29,9 @@ public class GameManager {
 		return sc.next();
 	}
 	
-	public void test() {
-		
+	public void run() {
+		while(isRun) {
+			title.run();
+		}
 	}
 }
