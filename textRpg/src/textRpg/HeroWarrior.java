@@ -9,7 +9,7 @@ public class HeroWarrior extends Hero {
 	}
 	
 	@Override
-	public int skill() {
+	public int skill(Unit target) {
 		if(isSkilled) {
 			return 0;
 		}		
