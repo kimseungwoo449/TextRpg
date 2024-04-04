@@ -1,5 +1,17 @@
 package textRpg;
 
-public class HeroPaladin {
+public class HeroPaladin extends Hero{
+
+	public HeroPaladin(int grade) {
+		super("성기사", 800, 55, grade);
+	}
+
+	@Override
+	public int skill() {
+		int myOffensivePower = super.getOffensivePower();
+		int heal = myOffensivePower*3;
+		super.setCurHp(heal);
+		return heal;
+	}
 
 }
