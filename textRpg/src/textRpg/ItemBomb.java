@@ -12,5 +12,9 @@ public class ItemBomb extends Item{
 	public void fucntion(Unit target) {
 		target.takeDamage(this.damage);
 	}
-
+	
+	public int getDamage() {
+		return this.damage;
+	}
+	
 }
