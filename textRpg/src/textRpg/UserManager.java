@@ -7,7 +7,7 @@ public class UserManager {
 	private static UserManager instance = new UserManager();
 	private UnitManager unitManager = UnitManager.getInstance();
 	private StageStore store = StageStore.getInstance();
-	
+
 	private ArrayList<User> users;
 
 	private UserManager() {
@@ -127,8 +127,8 @@ public class UserManager {
 	public void sellHero() {
 		User user = users.get(log);
 
-		user.showMyHero();
-		int sellIndex = GameManager.inputNumber("판매할 영웅");
+		showMyHeroes();
+		int sellIndex = GameManager.inputNumber("판매할 영웅")-1;
 
 		if (!user.sellHero(sellIndex)) {
 			Color.redPrintln("인덱스 재확인");
@@ -137,6 +137,11 @@ public class UserManager {
 
 		String info = String.format("판매완료. 현재 소지금 %d원", user.getCash());
 		Color.greenPrintln(info);
+	}
+
+	public void showMyHeroes() {
+		User user = users.get(log);
+		user.showMyHero();
 	}
 
 	public void organizeParty() {
@@ -154,11 +159,11 @@ public class UserManager {
 				i--;
 				continue;
 			}
-			
-			heroIndex[i]=index;
+
+			heroIndex[i] = index;
 		}
 		user.addParty(heroIndex);
-		
+
 		Color.greenPrintln("파티 조직 완료.");
 	}
 
@@ -169,33 +174,38 @@ public class UserManager {
 		}
 		return false;
 	}
-	
+
 	public void disassembleParty() {
 		User user = users.get(log);
-		
-		user.showParties();
+
+		showMyParties();
 		int index = GameManager.inputNumber("해체할 파티의 인덱스");
-		if(!user.deleteParty(index))
+		if (!user.deleteParty(index))
 			Color.redPrintln("인덱스 재확인.");
 		else
 			Color.greenPrintln("파티 해체 완료.");
 	}
-	
+
+	public void showMyParties() {
+		User user = users.get(log);
+		user.showParties();
+	}
+
 	public void buyItem() {
 		User user = users.get(log);
-		String userCashInfo = String.format("%s님의 현재 소지금 : %d원", user.getId(),user.getCash());
+		String userCashInfo = String.format("%s님의 현재 소지금 : %d원", user.getId(), user.getCash());
 		Color.greenPrintln(userCashInfo);
 		Item item = store.buyItem();
-		if(item==null) {
+		if (item == null) {
 			Color.redPrintln("아이템 번호를 잘못 입력하셨습니다.");
 			return;
 		}
-		
-		if(!user.buyItem(item)) {
+
+		if (!user.buyItem(item)) {
 			String info = String.format("소지금이 부족합니다. 현재 소지금 %d원", user.getCash());
 			Color.redPrintln(info);
-		}else {
-			String info = String.format("%s 구매 성공. 현재 소지금 %d원", item.getName(),user.getCash());
+		} else {
+			String info = String.format("%s 구매 성공. 현재 소지금 %d원", item.getName(), user.getCash());
 			Color.greenPrintln(info);
 		}
 	}
