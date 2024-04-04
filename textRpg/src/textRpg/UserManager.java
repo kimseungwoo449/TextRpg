@@ -101,7 +101,8 @@ public class UserManager {
 			return;
 		}
 
-		printBuyHeroMessage(newHero);		
+		printBuyHeroMessage(newHero);
+		
 	}
 	
 	private void printBuyHeroMessage(Hero newHero) {
@@ -121,5 +122,20 @@ public class UserManager {
 		
 		String info = String.format("[%s] [%s]", star,hero.getName());
 		return info;
+	}
+	
+	public void sellHero() {
+		User user = users.get(log);
+		
+		user.showMyHero();
+		int sellIndex = GameManager.inputNumber("판매할 영웅");
+		
+		if(!user.sellHero(sellIndex)) {
+			color.redPrintln("인덱스 재확인");
+			return;
+		}
+		
+		String info = String.format("판매완료. 현재 소지금 %d원", user.getCash());
+		color.greenPrintln(info);
 	}
 }

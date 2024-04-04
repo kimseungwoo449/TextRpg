@@ -32,7 +32,11 @@ public class User {
 	public String getId() {
 		return this.id;
 	}
-
+	
+	public int getCash() {
+		return this.cash;
+	}
+	
 	public String getPassword() {
 		return this.password;
 	}
