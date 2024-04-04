@@ -9,6 +9,7 @@ public class User {
 	private String password;
 
 	private int cash;
+	private int partyNumber;
 	
 	private Map<Integer, ArrayList<Hero>> party;
 	private ArrayList<Hero> myHero;
@@ -23,6 +24,7 @@ public class User {
 		this.myHero = initialHeros();
 		this.inventory = new ArrayList<Item>();
 		this.cash += 1000;
+		this.partyNumber = 1;
 	}
 
 	private ArrayList<Hero> initialHeros() {
@@ -69,6 +71,10 @@ public class User {
 			else if (hero instanceof HeroPrist)
 				color.yellowPrint((i + 1) + " : " + hero);
 		}
+	}
+	
+	public void addParty(ArrayList<Hero> party) {
+		this.party.put(partyNumber++, party);
 	}
 
 }
