@@ -103,20 +103,38 @@ public class User {
 			int key = (int) keySet.get(i);
 			ArrayList<Hero> party = parties.get(key);
 
-			color.greenPrintln("------------------ "+ key + " ------------------");
+			color.greenPrintln("------------------ " + key + " ------------------");
 			for (int j = 0; i < party.size(); i++) {
 				Hero hero = party.get(i);
-				
+
 				if (hero instanceof HeroWarrior)
-					color.redPrintln(hero+"");
+					color.redPrintln(hero + "");
 				else if (hero instanceof HeroWizard)
-					color.purplePrintln(hero+"");
+					color.purplePrintln(hero + "");
 				else if (hero instanceof HeroPaladin)
-					color.bluePrintln(hero+"");
+					color.bluePrintln(hero + "");
 				else if (hero instanceof HeroPrist)
-					color.yellowPrintln(hero+"");
-				
+					color.yellowPrintln(hero + "");
+
 			}
 		}
 	}
+
+	public boolean addItem(int pay, Item item) {
+		if (pay > cash)
+			return false;
+
+		cash -= pay;
+		this.inventory.add(item);
+		return true;
+	}
+
+	public void showInventory() {
+		for (int i = 0; i < inventory.size(); i++) {
+			Item item = inventory.get(i);
+			color.cyanPrintln((i + 1) + ". " + item.getName());
+		}
+	}
+	
+	
 }
