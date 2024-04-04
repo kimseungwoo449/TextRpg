@@ -17,7 +17,6 @@ public class User {
 	private ArrayList<Hero> myHero;
 	private ArrayList<Item> inventory;
 
-
 	public User(String id, String password) {
 		this.id = id;
 		this.password = password;
@@ -31,15 +30,15 @@ public class User {
 	public String getId() {
 		return this.id;
 	}
-	
+
 	public int getCash() {
 		return this.cash;
 	}
-	
+
 	public int getMyHeroSize() {
 		return this.myHero.size();
 	}
-	
+
 	public String getPassword() {
 		return this.password;
 	}
@@ -78,30 +77,30 @@ public class User {
 	public boolean sellHero(int index) {
 		if (index < 0 || index >= myHero.size())
 			return false;
-		
+
 		Hero targetHero = this.myHero.get(index);
 		int grade = targetHero.getGrade();
-		
-		cash+=300*grade;
+
+		cash += 300 * grade;
 		this.myHero.remove(index);
 		deleteHeroInParty(targetHero);
 		return true;
 	}
-	
+
 	private void deleteHeroInParty(Hero targetHero) {
-		for(int i =1;i<partyNumber;i++) {
+		for (int i = 1; i < partyNumber; i++) {
 			ArrayList<Hero> party = parties.get(i);
-			
-			for(int j = 0;j<party.size();j++) {
+
+			for (int j = 0; j < party.size(); j++) {
 				Hero heroInParty = party.get(j);
-				if(heroInParty.equals(targetHero)) {
+				if (heroInParty.equals(targetHero)) {
 					party.remove(targetHero);
 					break;
 				}
 			}
 		}
 	}
-	
+
 	public void showMyHero() {
 		for (int i = 0; i < myHero.size(); i++) {
 			Hero hero = myHero.get(i);
@@ -119,13 +118,13 @@ public class User {
 
 	public void addParty(int[] indexArray) {
 		ArrayList<Hero> party = new ArrayList<Hero>();
-		
-		for(int i =0;i<indexArray.length;i++) {
+
+		for (int i = 0; i < indexArray.length; i++) {
 			int heroIndex = indexArray[i];
 			Hero targetHero = myHero.get(heroIndex);
 			party.add(targetHero);
 		}
-		
+
 		this.parties.put(partyNumber++, party);
 	}
 
@@ -170,7 +169,7 @@ public class User {
 		}
 	}
 
-	public boolean buyItem( Item item) {
+	public boolean buyItem(Item item) {
 		int pay = item.getPrice();
 		if (pay > cash)
 			return false;
@@ -181,9 +180,10 @@ public class User {
 	}
 
 	public void showInventory() {
+		Color.greenPrintln("--------- 인벤토리 ----------");
 		for (int i = 0; i < inventory.size(); i++) {
 			Item item = inventory.get(i);
-			Color.cyanPrintln((i + 1) + ". " + item.getName());
+			Color.cyanPrintln((i + 1) + ". " +item.toString());
 		}
 	}
 
@@ -192,4 +192,5 @@ public class User {
 		item.fucntion(target);
 		inventory.remove(ItemIndex);
 	}
+
 }

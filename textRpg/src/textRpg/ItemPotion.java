@@ -19,5 +19,11 @@ public class ItemPotion extends Item{
 	public int getRecoveryAmount() {
 		return this.recoveryAmount;
 	}
+	
+	@Override
+	public String toString() {
+		String info = super.toString() + String.format(" 회복량[%d] ", this.recoveryAmount);
+		return info;
+	}
 
 }

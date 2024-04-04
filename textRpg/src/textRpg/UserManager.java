@@ -209,5 +209,10 @@ public class UserManager {
 			Color.greenPrintln(info);
 		}
 	}
+	
+	public void showMyInventory() {
+		User user = users.get(log);
+		user.showInventory();
+	}
 
 }

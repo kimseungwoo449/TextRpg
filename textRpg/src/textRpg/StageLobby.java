@@ -9,6 +9,7 @@ public class StageLobby extends Stage {
 	private final int STORE = 6;
 	private final int VIEW_MY_HEROES = 7;
 	private final int VIEW_MY_PARTIES = 8;
+	private final int VIEW_MY_INVENTORY = 9;
 	private final int TITLE = 0;
 
 	private boolean isRun;
@@ -36,6 +37,7 @@ public class StageLobby extends Stage {
 		Color.greenPrintln("[6] 상점");
 		Color.greenPrintln("[7] 영웅 보기");
 		Color.greenPrintln("[8] 파티 보기");
+		Color.greenPrintln("[9] 인벤토리");
 		Color.greenPrintln("[0] 타이틀");
 	}
 
@@ -56,6 +58,8 @@ public class StageLobby extends Stage {
 			viewAllHeroes();
 		else if (select == VIEW_MY_PARTIES)
 			viewAllParties();
+		else if (select == VIEW_MY_INVENTORY)
+			viewInventory();
 		else if (select == TITLE)
 			this.isRun = false;
 	}
@@ -90,6 +94,10 @@ public class StageLobby extends Stage {
 	
 	private void viewAllParties() {
 		userManager.showMyParties();
+	}
+	
+	private void viewInventory() {
+		userManager.showMyInventory();
 	}
 	
 	public void run() {
