@@ -49,6 +49,10 @@ public class ColorPrint {
 		System.out.println(YELLOW + message + RESET);
 	}
 	
+	public void cyanPrintln(String message) {
+		System.out.println(CYAN + message + RESET);
+	}
+	
 	public void purplePrintln(String message) {
 		System.out.println(PURPLE + message + RESET);
 	}
@@ -75,5 +79,9 @@ public class ColorPrint {
 	
 	public void purplePrint(String message) {
 		System.out.print(PURPLE + message + RESET);
+	}
+	
+	public void cyanPrint(String message) {
+		System.out.print(CYAN + message + RESET);
 	}
 }
