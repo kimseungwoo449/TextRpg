@@ -1,7 +1,9 @@
 package textRpg;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -10,8 +12,8 @@ public class User {
 
 	private int cash;
 	private int partyNumber;
-	
-	private Map<Integer, ArrayList<Hero>> party;
+
+	private Map<Integer, ArrayList<Hero>> parties;
 	private ArrayList<Hero> myHero;
 	private ArrayList<Item> inventory;
 
@@ -20,7 +22,7 @@ public class User {
 	public User(String id, String password) {
 		this.id = id;
 		this.password = password;
-		this.party = new HashMap<Integer, ArrayList<Hero>>();
+		this.parties = new HashMap<Integer, ArrayList<Hero>>();
 		this.myHero = initialHeros();
 		this.inventory = new ArrayList<Item>();
 		this.cash += 1000;
@@ -63,18 +65,58 @@ public class User {
 			Hero hero = myHero.get(i);
 
 			if (hero instanceof HeroWarrior)
-				color.redPrint((i + 1) + " : " + hero);
+				color.redPrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroWizard)
-				color.purplePrint((i + 1) + " : " + hero);
+				color.purplePrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroPaladin)
-				color.bluePrint((i + 1) + " : " + hero);
+				color.bluePrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroPrist)
-				color.yellowPrint((i + 1) + " : " + hero);
+				color.yellowPrintln((i + 1) + " : " + hero);
 		}
 	}
-	
+
 	public void addParty(ArrayList<Hero> party) {
-		this.party.put(partyNumber++, party);
+		this.parties.put(partyNumber++, party);
 	}
 
+	public boolean deleteParty(int index) {
+		if (index < 1 || index > parties.size())
+			return false;
+		for (int i = 1; i <= parties.size(); i++) {
+			if (i > index) {
+				parties.put(i - 1, parties.get(i));
+			}
+			if (i == parties.size())
+				parties.remove(i);
+		}
+		return true;
+	}
+
+	public void showParties() {
+		List keySet = new ArrayList(parties.keySet());
+		Collections.sort(keySet);
+		viewParty(keySet);
+	}
+
+	private void viewParty(List keySet) {
+		for (int i = 0; i < parties.size(); i++) {
+			int key = (int) keySet.get(i);
+			ArrayList<Hero> party = parties.get(key);
+
+			color.greenPrintln("------------------ "+ key + " ------------------");
+			for (int j = 0; i < party.size(); i++) {
+				Hero hero = party.get(i);
+				
+				if (hero instanceof HeroWarrior)
+					color.redPrintln(hero+"");
+				else if (hero instanceof HeroWizard)
+					color.purplePrintln(hero+"");
+				else if (hero instanceof HeroPaladin)
+					color.bluePrintln(hero+"");
+				else if (hero instanceof HeroPrist)
+					color.yellowPrintln(hero+"");
+				
+			}
+		}
+	}
 }
