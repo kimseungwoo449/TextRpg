@@ -40,4 +40,21 @@ public class UserManager {
 		}
 		return index;
 	}
+	
+	public void leave() {
+		String id = GameManager.inputString("ID");
+		String password = GameManager.inputString("PASSWORD");
+		
+		int userIndex = findUserIndexById(id);
+		
+		if(userIndex==-1||!users.get(userIndex).getPassword().equals(password)) {
+			color.redPrintln("ID 혹은 PASSWORD를 재확인 해주세요.");
+			return;
+		}
+		
+		users.remove(userIndex);
+		color.greenPrintln("탈퇴 완료.");
+	}
+	
+	
 }
