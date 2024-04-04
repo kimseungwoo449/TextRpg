@@ -22,7 +22,11 @@ abstract public class Hero extends Unit {
 			super.levelUp();
 		}
 	}
-
+	
+	public int getGrade() {
+		return this.grade;
+	}
+	
 	@Override
 	public String toString() {
 		String info = String.format("[%s][Lv : %d]", this.grade == 1 ? "★" : this.grade == 2 ? "★★" : "★★★");

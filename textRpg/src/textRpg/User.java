@@ -25,22 +25,22 @@ public class User {
 		this.parties = new HashMap<Integer, ArrayList<Hero>>();
 		this.myHero = initialHeros();
 		this.inventory = new ArrayList<Item>();
-		this.cash += 1000;
+		this.cash += 10000;
 		this.partyNumber = 1;
 	}
-	
+
 	public String getId() {
-		return this.id; 
+		return this.id;
 	}
-	
+
 	public String getPassword() {
 		return this.password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	private ArrayList<Hero> initialHeros() {
 		ArrayList<Hero> temp = new ArrayList<Hero>();
 		String[] className = { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };
@@ -59,15 +59,23 @@ public class User {
 		}
 		return temp;
 	}
-	
-	public void addHero(Hero hero) {
+
+	public boolean buyHero(Hero hero) {
+		if (cash < 500)
+			return false;
 		this.myHero.add(hero);
+		cash -= 500;
+		return true;
 	}
 
-	public boolean deleteHero(int index) {
+	public boolean sellHero(int index) {
 		if (index < 0 || index >= myHero.size())
 			return false;
-
+		
+		Hero targetHero = this.myHero.get(index);
+		int grade = targetHero.getGrade();
+		
+		cash+=300*grade;
 		this.myHero.remove(index);
 		return true;
 	}
@@ -77,7 +85,7 @@ public class User {
 			Hero hero = myHero.get(i);
 
 			if (hero instanceof HeroWarrior)
-				color.redPrintln((i + 1) + " : " + hero);
+				color.cyanPrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroWizard)
 				color.purplePrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroPaladin)
@@ -120,7 +128,7 @@ public class User {
 				Hero hero = party.get(i);
 
 				if (hero instanceof HeroWarrior)
-					color.redPrintln(hero + "");
+					color.cyanPrintln(hero + "");
 				else if (hero instanceof HeroWizard)
 					color.purplePrintln(hero + "");
 				else if (hero instanceof HeroPaladin)
@@ -147,8 +155,8 @@ public class User {
 			color.cyanPrintln((i + 1) + ". " + item.getName());
 		}
 	}
-	
-	public void useItem(Unit target,int ItemIndex) {
+
+	public void useItem(Unit target, int ItemIndex) {
 		Item item = inventory.get(ItemIndex);
 		item.fucntion(target);
 		inventory.remove(ItemIndex);

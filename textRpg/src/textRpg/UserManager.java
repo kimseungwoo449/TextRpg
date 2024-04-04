@@ -6,6 +6,7 @@ public class UserManager {
 	public static int log;
 	private static UserManager instance = new UserManager();
 	private ColorPrint color = ColorPrint.getInstance();
+	private UnitManager unitManager = UnitManager.getInstance();
 
 	private ArrayList<User> users;
 
@@ -86,9 +87,39 @@ public class UserManager {
 			color.redPrintln("비밀번호 재확인");
 			return;
 		}
-		
+
 		users.get(log).setPassword(newPassword);
 		color.greenPrintln("PASSWORD 수정 완료. 다시 로그인 해주세요.");
 		log = -1;
+	}
+
+	public void buyHero() {
+		Hero newHero = unitManager.buyHero();
+
+		if (!users.get(log).buyHero(newHero)) {
+			color.redPrintln("소지금이 부족합니다.");
+			return;
+		}
+
+		printBuyHeroMessage(newHero);		
+	}
+	
+	private void printBuyHeroMessage(Hero newHero) {
+		if (newHero instanceof HeroWarrior)
+			color.cyanPrintln(printHero(newHero)+" 등장!");
+		else if (newHero instanceof HeroWizard)
+			color.purplePrintln(printHero(newHero)+" 등장!");
+		else if (newHero instanceof HeroPaladin)
+			color.bluePrintln(printHero(newHero)+" 등장!");
+		else if (newHero instanceof HeroPrist)
+			color.yellowPrintln(printHero(newHero)+" 등장!");
+	}
+	
+	private String printHero(Hero hero) {
+		int grade = hero.getGrade();
+		String star = grade == 1 ? "★" : grade == 2 ? "★★" : "★★★";
+		
+		String info = String.format("[%s] [%s]", star,hero.getName());
+		return info;
 	}
 }
