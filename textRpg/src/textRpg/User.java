@@ -17,7 +17,6 @@ public class User {
 	private ArrayList<Hero> myHero;
 	private ArrayList<Item> inventory;
 
-	private ColorPrint color = ColorPrint.getInstance();
 
 	public User(String id, String password) {
 		this.id = id;
@@ -93,13 +92,13 @@ public class User {
 			Hero hero = myHero.get(i);
 
 			if (hero instanceof HeroWarrior)
-				color.cyanPrintln((i + 1) + " : " + hero);
+				Color.cyanPrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroWizard)
-				color.purplePrintln((i + 1) + " : " + hero);
+				Color.purplePrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroPaladin)
-				color.bluePrintln((i + 1) + " : " + hero);
+				Color.bluePrintln((i + 1) + " : " + hero);
 			else if (hero instanceof HeroPrist)
-				color.yellowPrintln((i + 1) + " : " + hero);
+				Color.yellowPrintln((i + 1) + " : " + hero);
 		}
 	}
 
@@ -139,18 +138,18 @@ public class User {
 			int key = (int) keySet.get(i);
 			ArrayList<Hero> party = parties.get(key);
 
-			color.greenPrintln("------------------ " + key + " ------------------");
+			Color.greenPrintln("------------------ " + key + " ------------------");
 			for (int j = 0; i < party.size(); i++) {
 				Hero hero = party.get(i);
 
 				if (hero instanceof HeroWarrior)
-					color.cyanPrintln(hero + "");
+					Color.cyanPrintln(hero + "");
 				else if (hero instanceof HeroWizard)
-					color.purplePrintln(hero + "");
+					Color.purplePrintln(hero + "");
 				else if (hero instanceof HeroPaladin)
-					color.bluePrintln(hero + "");
+					Color.bluePrintln(hero + "");
 				else if (hero instanceof HeroPrist)
-					color.yellowPrintln(hero + "");
+					Color.yellowPrintln(hero + "");
 
 			}
 		}
@@ -168,7 +167,7 @@ public class User {
 	public void showInventory() {
 		for (int i = 0; i < inventory.size(); i++) {
 			Item item = inventory.get(i);
-			color.cyanPrintln((i + 1) + ". " + item.getName());
+			Color.cyanPrintln((i + 1) + ". " + item.getName());
 		}
 	}
 

@@ -1,5 +1,5 @@
 package textRpg;
 
-public class Stage {
-
+abstract public class Stage {
+	abstract public void printMenu();
 }
