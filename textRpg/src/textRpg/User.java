@@ -28,7 +28,15 @@ public class User {
 		this.cash += 1000;
 		this.partyNumber = 1;
 	}
-
+	
+	public String getId() {
+		return this.id; 
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+	
 	private ArrayList<Hero> initialHeros() {
 		ArrayList<Hero> temp = new ArrayList<Hero>();
 		String[] className = { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };
@@ -47,7 +55,7 @@ public class User {
 		}
 		return temp;
 	}
-
+	
 	public void addHero(Hero hero) {
 		this.myHero.add(hero);
 	}
