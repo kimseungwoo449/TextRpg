@@ -1,11 +1,14 @@
 package textRpg;
 
+import java.util.Random;
+
 public class ItemPotion extends Item{
+	private Random ran = new Random();
 	private int recoveryAmount;
 	
-	public ItemPotion(int recoveryAmonunt) {
+	public ItemPotion() {
 		super("포션", 200);
-		this.recoveryAmount = recoveryAmonunt;
+		this.recoveryAmount = ran.nextInt(20)+180;	//180~200 회복량
 	}
 
 	@Override

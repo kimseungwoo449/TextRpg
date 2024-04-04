@@ -6,7 +6,8 @@ public class UserManager {
 	public static int log;
 	private static UserManager instance = new UserManager();
 	private UnitManager unitManager = UnitManager.getInstance();
-
+	private StageStore store = StageStore.getInstance();
+	
 	private ArrayList<User> users;
 
 	private UserManager() {
@@ -180,8 +181,23 @@ public class UserManager {
 			Color.greenPrintln("파티 해체 완료.");
 	}
 	
-	public void buyItem(Item item) {
+	public void buyItem() {
+		User user = users.get(log);
+		String userCashInfo = String.format("%s님의 현재 소지금 : %d원", user.getId(),user.getCash());
+		Color.greenPrintln(userCashInfo);
+		Item item = store.buyItem();
+		if(item==null) {
+			Color.redPrintln("아이템 번호를 잘못 입력하셨습니다.");
+			return;
+		}
 		
+		if(!user.buyItem(item)) {
+			String info = String.format("소지금이 부족합니다. 현재 소지금 %d원", user.getCash());
+			Color.redPrintln(info);
+		}else {
+			String info = String.format("%s 구매 성공. 현재 소지금 %d원", item.getName(),user.getCash());
+			Color.greenPrintln(info);
+		}
 	}
 
 }

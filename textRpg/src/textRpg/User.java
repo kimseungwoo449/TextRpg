@@ -155,7 +155,8 @@ public class User {
 		}
 	}
 
-	public boolean addItem(int pay, Item item) {
+	public boolean buyItem( Item item) {
+		int pay = item.getPrice();
 		if (pay > cash)
 			return false;
 
