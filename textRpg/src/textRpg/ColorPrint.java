@@ -29,27 +29,51 @@ public class ColorPrint {
 		return instance;
 	}
 
-	public void redPrint(String message) {
+	public void redPrintln(String message) {
 		System.out.println(RED + message + RESET);
 	}
 
-	public void greenPrint(String message) {
+	public void greenPrintln(String message) {
 		System.out.println(GREEN + message + RESET);
 	}
 
-	public void whitePrint(String message) {
+	public void whitePrintln(String message) {
 		System.out.println(WHITE + message + RESET);
 	}
 
-	public void bluePrint(String message) {
+	public void bluePrintln(String message) {
 		System.out.println(BLUE + message + RESET);
 	}
 	
-	public void yellowPrint(String message) {
+	public void yellowPrintln(String message) {
 		System.out.println(YELLOW + message + RESET);
 	}
 	
-	public void purplePrint(String message) {
+	public void purplePrintln(String message) {
 		System.out.println(PURPLE + message + RESET);
+	}
+	
+	public void redPrint(String message) {
+		System.out.print(RED + message + RESET);
+	}
+
+	public void greenPrint(String message) {
+		System.out.print(GREEN + message + RESET);
+	}
+
+	public void whitePrint(String message) {
+		System.out.print(WHITE + message + RESET);
+	}
+
+	public void bluePrint(String message) {
+		System.out.print(BLUE + message + RESET);
+	}
+	
+	public void yellowPrint(String message) {
+		System.out.print(YELLOW + message + RESET);
+	}
+	
+	public void purplePrint(String message) {
+		System.out.print(PURPLE + message + RESET);
 	}
 }
