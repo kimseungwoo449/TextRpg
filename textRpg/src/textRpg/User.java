@@ -84,9 +84,24 @@ public class User {
 		
 		cash+=300*grade;
 		this.myHero.remove(index);
+		deleteHeroInParty(targetHero);
 		return true;
 	}
-
+	
+	private void deleteHeroInParty(Hero targetHero) {
+		for(int i =1;i<partyNumber;i++) {
+			ArrayList<Hero> party = parties.get(i);
+			
+			for(int j = 0;j<party.size();j++) {
+				Hero heroInParty = party.get(j);
+				if(heroInParty.equals(targetHero)) {
+					party.remove(targetHero);
+					break;
+				}
+			}
+		}
+	}
+	
 	public void showMyHero() {
 		for (int i = 0; i < myHero.size(); i++) {
 			Hero hero = myHero.get(i);
@@ -139,8 +154,8 @@ public class User {
 			ArrayList<Hero> party = parties.get(key);
 
 			Color.greenPrintln("------------------ " + key + " ------------------");
-			for (int j = 0; i < party.size(); i++) {
-				Hero hero = party.get(i);
+			for (int j = 0; j < party.size(); j++) {
+				Hero hero = party.get(j);
 
 				if (hero instanceof HeroWarrior)
 					Color.cyanPrintln(hero + "");
