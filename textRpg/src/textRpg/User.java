@@ -136,5 +136,9 @@ public class User {
 		}
 	}
 	
-	
+	public void useItem(Unit target,int ItemIndex) {
+		Item item = inventory.get(ItemIndex);
+		item.fucntion(target);
+		inventory.remove(ItemIndex);
+	}
 }
