@@ -37,6 +37,10 @@ public class User {
 		return this.password;
 	}
 	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	private ArrayList<Hero> initialHeros() {
 		ArrayList<Hero> temp = new ArrayList<Hero>();
 		String[] className = { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };
