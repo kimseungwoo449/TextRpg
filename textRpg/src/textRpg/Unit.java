@@ -83,8 +83,8 @@ abstract public class Unit {
 		return this.isDead;
 	}
 
-	public void levelUp() {
-		this.exp -= 100;
+	public void levelUp(int maxExp) {
+		this.exp -= maxExp;
 		this.maxHp += this.maxHp / 3;
 		this.curHp = this.maxHp;
 		this.offensivePower += this.offensivePower / 3;
@@ -92,7 +92,7 @@ abstract public class Unit {
 
 	@Override
 	public String toString() {
-		String info = String.format("[%s] [%d/%d] [%d]", name, curHp, maxHp, offensivePower);
+		String info = String.format("[%s] [HP : %d/%d] [POWER : %d]", name, curHp, maxHp, offensivePower);
 		return info;
 	}
 }
