@@ -199,17 +199,26 @@ public class UserManager {
 		User user = users.get(log);
 		String userCashInfo = String.format("%s님의 현재 소지금 : %d원", user.getId(), user.getCash());
 		Color.greenPrintln(userCashInfo);
-		Item item = store.buyItem();
-		if (item == null) {
-			Color.redPrintln("아이템 번호를 잘못 입력하셨습니다.");
+		ArrayList<Item> jang = store.run();
+		
+		if (jang.size()==0) {
 			return;
 		}
-
-		if (!user.buyItem(item)) {
+		
+		int totalPrice = 0;
+		for (Item item : jang) {
+			totalPrice += item.getPrice();
+		}
+		
+		if (totalPrice>user.getCash()) {
 			String info = String.format("소지금이 부족합니다. 현재 소지금 %d원", user.getCash());
 			Color.redPrintln(info);
 		} else {
-			String info = String.format("%s 구매 성공. 현재 소지금 %d원", item.getName(), user.getCash());
+			for (Item item : jang) {
+				user.buyItem(item);
+			}
+			
+			String info = String.format("구매 성공. 현재 소지금 %d원",user.getCash());
 			Color.greenPrintln(info);
 		}
 	}

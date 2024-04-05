@@ -1,5 +1,13 @@
 package textRpg;
 
+interface Equipable{
+	public void setNameAndPrice(int grade);
+}
+
+interface Consumable{
+	
+}
+
 abstract public class Item {
 	private int price;
 	private String name;
@@ -9,16 +17,29 @@ abstract public class Item {
 		this.price = price;
 	}
 	
+	public Item(){
+		
+	}
+	
 	abstract public void fucntion(Unit target);
 	
 	public String getName() {
 		return this.name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 	public int getPrice() {
 		return this.price;
 	}
 	
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
 		return "["+this.name+"]";

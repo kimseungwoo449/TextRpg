@@ -2,7 +2,7 @@ package textRpg;
 
 import java.util.Random;
 
-public class ItemBomb extends Item {
+public class ItemBomb extends Item implements Consumable{
 	private Random ran = new Random();
 	private int damage;
 
