@@ -11,9 +11,10 @@ public class StageBattle extends Stage {
 	private final int ITEM = 3;
 
 	private ArrayList<Unit> party;
-
 	private ArrayList<Unit> monsters;
-
+	
+	private UserManager userManager = UserManager.getInstance();
+	
 	public StageBattle(ArrayList<Unit> party, ArrayList<Unit> monsters) {
 		super("BATTLE");
 		this.party = party;
@@ -22,15 +23,13 @@ public class StageBattle extends Stage {
 
 	@Override
 	public void printMenu() {
-		Color.redPrintln("========[" + super.getStageName() + "]=======");
+		Color.greenPrintln("========[" + super.getStageName() + "]=======");
 		Color.bluePrintln("========[PLAYER]=======");
 		for (Unit hero : party)
 			printHero(hero);
 		Color.redPrintln("========[MONSTER]=======");
 		for (Unit monster : monsters)
 			Color.redPrintln(monster + "");
-		takeDamage();
-		result();
 	}
 
 	private boolean checkNext() {
@@ -98,8 +97,9 @@ public class StageBattle extends Stage {
 				i--;
 				continue;
 			}
-			heroesAction += curHeroAction;
+			heroesAction += curHeroAction+"\n";
 		}
+		Color.whitePrint(heroesAction);
 	}
 
 	private String runMenu(Hero hero) {
@@ -134,8 +134,7 @@ public class StageBattle extends Stage {
 		if (hero instanceof HeroWizard) {
 			int attack = hero.skill(monster);
 			hero.attack(monster, attack);
-			info += "[파이어볼]!\n";
-			info += String.format("[%s]가 [%s]를 %d만큼 공격했습니다!", hero.getName(), monster.getName(), attack);
+			info += String.format("[파이어볼]!! [%s]가 [%s]를 %d만큼 공격했습니다!", hero.getName(), monster.getName(), attack);
 		} else if (hero instanceof HeroPaladin) {
 			int heal = hero.skill(hero);
 			info+=String.format("[%s]가 %d만큼 회복했습니다.", hero.getName(),heal);
@@ -166,11 +165,33 @@ public class StageBattle extends Stage {
 		}
 		return target;
 	}
-
+	
+	private String useItem(Hero hero) {
+		userManager.showMyInventory();
+		int itemIndex = GameManager.inputNumber("사용할 아이템 번호")-1;
+		
+		Item item = userManager.getItem(itemIndex);
+		
+		if(item instanceof ItemBomb) {
+			ItemBomb bomb = (ItemBomb)item;
+			Unit monster = choiceRandomUnit(monsters);
+			bomb.fucntion(monster);
+			return String.format("[%s]가 [%s]를 사용해 [%s]를 %d의 데미지로 공격합니다.", hero.getName(),bomb.getName(),monster.getName(),bomb.getDamage());
+		}else if(item instanceof ItemPotion) {
+			ItemPotion potion = (ItemPotion)item;
+			potion.fucntion(hero);
+			return String.format("[%s]가 [%s]를 사용해 체력 %d를 회복합니다.", hero.getName(),potion.getName(),potion.getRecoveryAmount());
+		}
+			
+		return null;
+	}
+	
+	
 	public void run() {
 		while (checkNext()) {
 			printMenu();
 			selectNextAction();
+			
 		}
 	}
 

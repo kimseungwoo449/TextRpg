@@ -10,7 +10,7 @@ public class ItemBomb extends Item {
 		super("폭탄", 700);
 		this.damage = ran.nextInt(20) + 200; // 200~220데미지
 	}
-
+	
 	@Override
 	public void fucntion(Unit target) {
 		target.takeDamage(this.damage);

@@ -13,14 +13,14 @@ public class User {
 	private int cash;
 	private int partyNumber;
 
-	private Map<Integer, ArrayList<Hero>> parties;
+	private Map<Integer, ArrayList<Unit>> parties;
 	private ArrayList<Hero> myHero;
 	private ArrayList<Item> inventory;
 
 	public User(String id, String password) {
 		this.id = id;
 		this.password = password;
-		this.parties = new HashMap<Integer, ArrayList<Hero>>();
+		this.parties = new HashMap<Integer, ArrayList<Unit>>();
 		this.myHero = initialHeros();
 		this.inventory = new ArrayList<Item>();
 		this.cash += 10000;
@@ -89,10 +89,10 @@ public class User {
 
 	private void deleteHeroInParty(Hero targetHero) {
 		for (int i = 1; i < partyNumber; i++) {
-			ArrayList<Hero> party = parties.get(i);
+			ArrayList<Unit> party = parties.get(i);
 
 			for (int j = 0; j < party.size(); j++) {
-				Hero heroInParty = party.get(j);
+				Unit heroInParty = party.get(j);
 				if (heroInParty.equals(targetHero)) {
 					party.remove(targetHero);
 					break;
@@ -117,7 +117,7 @@ public class User {
 	}
 
 	public void addParty(int[] indexArray) {
-		ArrayList<Hero> party = new ArrayList<Hero>();
+		ArrayList<Unit> party = new ArrayList<Unit>();
 
 		for (int i = 0; i < indexArray.length; i++) {
 			int heroIndex = indexArray[i];
@@ -150,11 +150,11 @@ public class User {
 	private void viewParty(List keySet) {
 		for (int i = 0; i < parties.size(); i++) {
 			int key = (int) keySet.get(i);
-			ArrayList<Hero> party = parties.get(key);
+			ArrayList<Unit> party = parties.get(key);
 
 			Color.greenPrintln("------------------ " + key + " ------------------");
 			for (int j = 0; j < party.size(); j++) {
-				Hero hero = party.get(j);
+				Unit hero = party.get(j);
 
 				if (hero instanceof HeroWarrior)
 					Color.cyanPrintln(hero + "");
@@ -187,10 +187,19 @@ public class User {
 		}
 	}
 
-	public void useItem(Unit target, int ItemIndex) {
-		Item item = inventory.get(ItemIndex);
-		item.fucntion(target);
-		inventory.remove(ItemIndex);
+	public Item getItem(int itemIndex) {
+		if(itemIndex<0||itemIndex>=inventory.size())
+			return null;
+		Item item = inventory.get(itemIndex);
+		inventory.remove(itemIndex);
+		return item;
 	}
-
+	
+	public ArrayList<Unit> getParty(int index){
+		if(index<1||index>=partyNumber)
+			return null;
+		
+		return parties.get(index);
+	}
+	
 }

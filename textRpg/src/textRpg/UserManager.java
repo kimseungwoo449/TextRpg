@@ -190,7 +190,11 @@ public class UserManager {
 		User user = users.get(log);
 		user.showParties();
 	}
-
+	
+	public ArrayList<Unit> getParty(int index){
+		return users.get(log).getParty(index);
+	}
+	
 	public void buyItem() {
 		User user = users.get(log);
 		String userCashInfo = String.format("%s님의 현재 소지금 : %d원", user.getId(), user.getCash());
@@ -214,5 +218,25 @@ public class UserManager {
 		User user = users.get(log);
 		user.showInventory();
 	}
-
+	
+	public Item getItem(int itmeIndex) {
+		User user = users.get(log);
+		return user.getItem( itmeIndex);
+	}
+	
+	public void battle() {
+		User user = users.get(log);
+		user.showParties();
+		int number = GameManager.inputNumber("사용할 파티 번호");
+		ArrayList<Unit> party = user.getParty(number);
+		
+		if(party==null) {
+			Color.redPrintln("파티 번호를 재확인 해주세요.");
+			return;
+		}
+		
+		ArrayList<Unit> monsters = unitManager.createMonsters();
+		StageBattle battleStage = new StageBattle(party, monsters);
+		battleStage.run();
+	}
 }
