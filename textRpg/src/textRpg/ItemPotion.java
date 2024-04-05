@@ -22,7 +22,7 @@ public class ItemPotion extends Item implements Consumable{
 	
 	@Override
 	public String toString() {
-		String info = super.toString() + String.format(" 회복량[%d] ", this.recoveryAmount);
+		String info = super.toString() + String.format(" 회복량 : %d ", this.recoveryAmount);
 		return info;
 	}
 

@@ -6,7 +6,6 @@ public class ItemArmor extends Item implements Equipable {
 	private Random ran = new Random();
 
 	private int grade;
-	private boolean isEquiped;
 	private int armor;
 
 	public ItemArmor(int grade) {
@@ -33,20 +32,24 @@ public class ItemArmor extends Item implements Equipable {
 		}
 	}
 
-	public boolean isEquied() {
-		return this.isEquiped;
-	}
-
 	@Override
 	public void fucntion(Unit target) {
 		Hero hero = (Hero) target;
-		if (!isEquiped) {
+		if (!super.isEquiped()) {
 			hero.setArmor(armor);
-			this.isEquiped = true;
+			super.setIsEquiped();
+			super.setEquipedHero(hero);
 		} else {
 			hero.setArmor(0);
-			this.isEquiped = false;
+			super.setIsEquiped();
+			super.setEquipedHero(hero);
 		}
+	}
+
+	@Override
+	public String toString() {
+		String info = String.format("%s 방어력 : %d", super.toString(), this.armor);
+		return info;
 	}
 
 }

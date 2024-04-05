@@ -6,7 +6,6 @@ public class ItemWeapon extends Item implements Equipable{
 	private Random ran = new Random();
 
 	private int grade;
-	private boolean isEquiped;
 	private int extraPower;
 	
 	public ItemWeapon(int grade) {
@@ -16,17 +15,15 @@ public class ItemWeapon extends Item implements Equipable{
 	@Override
 	public void fucntion(Unit target) {
 		Hero hero = (Hero)target;
-		if(!isEquiped) {
+		if(!super.isEquiped()) {
 			hero.setExtraPower(extraPower);
-			this.isEquiped = true;
+			super.setIsEquiped();
+			super.setEquipedHero(hero);
 		}else {
 			hero.setExtraPower(0);
-			this.isEquiped = false;
+			super.setIsEquiped();
+			super.setEquipedHero(hero);
 		}
-	}
-	
-	public boolean isEquied() {
-		return this.isEquiped;
 	}
 	
 	@Override
@@ -48,5 +45,10 @@ public class ItemWeapon extends Item implements Equipable{
 			this.extraPower = ran.nextInt(5)+30;
 		}
 	}
-
+	
+	@Override
+	public String toString() {
+		String info = String.format("%s 공격력 : %d", super.toString(),this.extraPower);
+		return info;
+	}
 }

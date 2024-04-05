@@ -225,7 +225,7 @@ public class UserManager {
 	
 	public void showMyInventory() {
 		User user = users.get(log);
-		user.showInventory();
+		user.printInventory();
 	}
 	
 	public Item getItem(int itmeIndex) {

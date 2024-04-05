@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 public class User {
+	private final int CONSUMABLE_ITEM = 1;
+	private final int EQUIPABLE_ITEM = 2;
+
+	private final int EQUIP = 1;
+	private final int DISARM = 2;
+
 	private String id;
 	private String password;
 
@@ -15,14 +21,17 @@ public class User {
 
 	private Map<Integer, ArrayList<Unit>> parties;
 	private ArrayList<Hero> myHero;
-	private ArrayList<Item> inventory;
+
+	private ArrayList<Item> consumableItem;
+	private ArrayList<Item> equipableItem;
 
 	public User(String id, String password) {
 		this.id = id;
 		this.password = password;
 		this.parties = new HashMap<Integer, ArrayList<Unit>>();
 		this.myHero = initialHeros();
-		this.inventory = new ArrayList<Item>();
+		this.consumableItem = new ArrayList<Item>();
+		this.equipableItem = new ArrayList<Item>();
 		this.cash += 10000;
 		this.partyNumber = 1;
 	}
@@ -173,33 +182,109 @@ public class User {
 		int pay = item.getPrice();
 		if (pay > cash)
 			return false;
-
 		cash -= pay;
-		this.inventory.add(item);
+
+		if (item instanceof Equipable)
+			equipableItem.add(item);
+		else if (item instanceof Consumable)
+			consumableItem.add(item);
+
 		return true;
 	}
 
-	public void showInventory() {
+	public void printInventory() {
 		Color.greenPrintln("--------- 인벤토리 ----------");
-		for (int i = 0; i < inventory.size(); i++) {
-			Item item = inventory.get(i);
-			Color.cyanPrintln((i + 1) + ". " +item.toString());
+		Color.greenPrintln("[1] 소비 아이템");
+		Color.greenPrintln("[2] 장비 아이템");
+		int select = GameManager.inputNumber("Menu");
+		runPrintInventory(select);
+	}
+
+	private void runPrintInventory(int select) {
+		if (select == CONSUMABLE_ITEM)
+			viewConsumableItem();
+		else if (select == EQUIPABLE_ITEM)
+			viewEquipableItem();
+	}
+
+	private void viewConsumableItem() {
+		int number = 1;
+		for (Item item : consumableItem) {
+			Color.cyanPrintln(number++ + ". " + item);
 		}
 	}
 
+	private void viewEquipableItem() {
+		int number = 1;
+		for (Item item : equipableItem) {
+			String info = String.format("%d. %s %s", number++, item, item.isEquiped() ? "[장착중]" : "");
+			Color.cyanPrintln(info);
+		}
+		Color.greenPrintln("[1] 장착");
+		Color.greenPrintln("[2] 해제");
+		Color.greenPrintln("[*] 뒤로가기");
+		int select = GameManager.inputNumber("Menu");
+		runEquipableItem(select);
+	}
+
+	private void runEquipableItem(int select) {
+		if (select == EQUIP)
+			equip();
+		else if (select == DISARM)
+			disarm();
+	}
+
+	private void equip() {
+		int itemIndex = GameManager.inputNumber("장착할 아이템 번호") - 1;
+		if (itemIndex < 0 || itemIndex >= equipableItem.size() || this.equipableItem.get(itemIndex).isEquiped()) {
+			Color.redPrintln("번호를 다시 확인해 주세요.");
+			return;
+		}
+		Item item = this.equipableItem.get(itemIndex);
+
+		showMyHero();
+		int heroIndex = GameManager.inputNumber("장착할 영웅 번호") - 1;
+
+		if (heroIndex < 0 || heroIndex >= myHero.size()) {
+			Color.redPrintln("번호를 다시 확인하세요.");
+			return;
+		}
+
+		Hero hero = myHero.get(heroIndex);
+		if ((hero.getArmor() != 0 || item instanceof ItemArmor)
+				|| (hero.getExtraPower() != 0 && item instanceof ItemWeapon)) {
+			Color.redPrintln("해당 영웅은 이미 장착 중인 아이템 종류입니다.");
+			return;
+		}
+
+		item.fucntion(hero);
+		Color.greenPrintln("장착완료.");
+	}
+
+	private void disarm() {
+		int itemIndex = GameManager.inputNumber("장착할 아이템 번호") - 1;
+		if (itemIndex < 0 || itemIndex >= equipableItem.size() || !this.equipableItem.get(itemIndex).isEquiped()) {
+			Color.redPrintln("번호를 다시 확인해 주세요.");
+			return;
+		}
+		Item item = this.equipableItem.get(itemIndex);
+		item.fucntion(item.getEquipedHero());
+		Color.greenPrintln("해제완료.");
+	}
+
 	public Item getItem(int itemIndex) {
-		if(itemIndex<0||itemIndex>=inventory.size())
+		if (itemIndex < 0 || itemIndex >= consumableItem.size())
 			return null;
-		Item item = inventory.get(itemIndex);
-		inventory.remove(itemIndex);
+		Item item = consumableItem.get(itemIndex);
+		consumableItem.remove(itemIndex);
 		return item;
 	}
-	
-	public ArrayList<Unit> getParty(int index){
-		if(index<1||index>=partyNumber)
+
+	public ArrayList<Unit> getParty(int index) {
+		if (index < 1 || index >= partyNumber)
 			return null;
-		
+
 		return parties.get(index);
 	}
-	
+
 }

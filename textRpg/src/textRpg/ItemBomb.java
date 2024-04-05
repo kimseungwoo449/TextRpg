@@ -22,7 +22,7 @@ public class ItemBomb extends Item implements Consumable{
 
 	@Override
 	public String toString() {
-		String info = super.toString() + String.format(" 데미지[%d] ", this.damage);
+		String info = super.toString() + String.format(" 데미지 : %d ", this.damage);
 		return info;
 	}
 }
