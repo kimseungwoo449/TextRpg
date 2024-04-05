@@ -27,10 +27,15 @@ abstract public class Hero extends Unit {
 		return this.grade;
 	}
 	
+	public int getLv() {
+		return this.lv;
+	}
+	
 	@Override
 	public String toString() {
 		String info = String.format("[%s][Lv : %d]", this.grade == 1 ? "★" : this.grade == 2 ? "★★" : "★★★",this.lv);
 		info+=super.toString();
 		return info;
 	}
+	
 }
