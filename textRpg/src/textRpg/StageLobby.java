@@ -21,7 +21,6 @@ public class StageLobby extends Stage {
 
 	private StageLobby() {
 		super("로비");
-		this.isRun = true;
 	}
 
 	public static StageLobby getInstance() {
@@ -103,6 +102,7 @@ public class StageLobby extends Stage {
 	}
 	
 	public void run() {
+		this.isRun = true;
 		while(isRun) {
 			printMenu();
 			int select = GameManager.inputNumber("Menu");
