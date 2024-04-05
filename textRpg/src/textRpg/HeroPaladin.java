@@ -9,6 +9,7 @@ public class HeroPaladin extends Hero{
 	@Override
 	public int skill(Unit target) {
 		int myOffensivePower = super.getOffensivePower();
+		myOffensivePower = super.getExtraPower();
 		int heal = myOffensivePower*3;
 		super.setCurHp(heal);
 		return heal;

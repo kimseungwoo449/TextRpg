@@ -4,6 +4,8 @@ abstract public class Hero extends Unit {
 	private int grade;
 	private int lv;
 	private int maxExp;
+	private int extraPower;
+	private int armor;
 
 	public Hero(String name, int maxHp, int offensivePower, int grade) {
 		super(name, maxHp, offensivePower, 0); // 이름, 최대 체력, 공격력, 경험치(0) 시작
@@ -12,6 +14,7 @@ abstract public class Hero extends Unit {
 		super.setOffensivePower(grade);
 		this.lv = 1;
 		this.maxExp = 100;
+		this.armor = 0;
 	}
 
 	public void reciveExp(int exp) {
@@ -37,6 +40,22 @@ abstract public class Hero extends Unit {
 		return this.lv;
 	}
 
+	public int getExtraPower() {
+		return this.extraPower;
+	}
+
+	public void setExtraPower(int extraPower) {
+		this.extraPower = extraPower;
+	}
+
+	public int getArmor() {
+		return this.armor;
+	}
+
+	public void setArmor(int armor) {
+		this.armor = armor;
+	}
+
 	private String stringOfThisGradeAndLevel() {
 		return String.format("[%s][Lv : %d]", this.grade == 1 ? "★" : this.grade == 2 ? "★★" : "★★★", this.lv);
 	}
@@ -46,6 +65,8 @@ abstract public class Hero extends Unit {
 		String info = stringOfThisGradeAndLevel();
 		info += super.toString();
 		info += String.format(" [EXP : %d/%d]", super.getExp(), maxExp);
+		info += String.format("%s%s", this.extraPower != 0 ? " [추가공격력 : "+this.extraPower+"]" : "",
+				this.armor != 0 ? " [방어력 : "+this.armor+"]" : "");
 		return info;
 	}
 

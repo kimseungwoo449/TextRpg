@@ -117,7 +117,7 @@ public class StageBattle extends Stage {
 		Unit monster = choiceRandomUnit(monsters);
 
 		int attack = hero.getOffensivePower();
-
+		attack += hero.getExtraPower();
 		if (hero instanceof HeroWarrior && ((HeroWarrior) hero).isSkilled()) {
 			attack *= 3;
 			((HeroWarrior) hero).setIsSkilled();
@@ -204,21 +204,19 @@ public class StageBattle extends Stage {
 		String monstersAction = "";
 		for (Unit monster : monsters) {
 			int randomHero = ran.nextInt(party.size());
-			Unit hero = party.get(randomHero);
+			Hero hero = (Hero) party.get(randomHero);
 			if (!monster.isDead() && !hero.isDead()) {
 				int randomSkill = ran.nextInt(4);
-				int attack = 0;
+				int attack = calculateAttack(monster, hero, randomSkill);
 
-				if (randomSkill == 0) {
-					attack = monster.skill(hero);
-				} else {
-					attack = monster.getOffensivePower();
-				}
-
-				monstersAction += makeText(monster, hero, attack, randomSkill) + "\n";
 				if (monster instanceof MonsterSlime && randomSkill == 0) {
+					monstersAction += makeText(monster, hero, attack, randomSkill) + "\n";
 					continue;
 				}
+
+				attack = blockDamageCheck(hero, attack);
+				monstersAction += makeText(monster, hero, attack, randomSkill) + "\n";
+
 				hero.takeDamage(attack);
 				if (hero.isDead()) {
 					monstersAction += String.format("[%s]에 의해 [%s]가 사망했습니다....\n", monster.getName(), hero.getName());
@@ -226,6 +224,27 @@ public class StageBattle extends Stage {
 			}
 		}
 		return monstersAction;
+	}
+	
+	private int blockDamageCheck(Hero hero, int attack) {
+		double armorOfHero = (double) hero.getArmor();
+		if (armorOfHero != 0) {
+			double ratio = armorOfHero / 100;
+			double blockDamage = attack * ratio;
+			attack -= blockDamage;
+		}
+		return attack;
+	}
+
+	private int calculateAttack(Unit monster, Hero hero, int randomSkill) {
+		int attack = 0;
+		if (randomSkill == 0) {
+			attack = monster.skill(hero);
+		} else {
+			attack = monster.getOffensivePower();
+		}
+
+		return attack;
 	}
 
 	private String makeText(Unit monster, Unit hero, int value, int skilled) {
