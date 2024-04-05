@@ -138,11 +138,11 @@ public class StageBattle extends Stage {
 			int attack = hero.skill(monster);
 			hero.attack(monster, attack);
 			info += String.format("[파이어볼]!! [%s]가 [%s]를 %d만큼 공격했습니다!", hero.getName(), monster.getName(), attack);
-			
+
 			if (monster.isDead()) {
 				info += String.format("\n[%s]가 죽었습니다!", monster.getName());
 			}
-			
+
 		} else if (hero instanceof HeroPaladin) {
 			int heal = hero.skill(hero);
 			info += String.format("[%s]가 %d만큼 회복했습니다.", hero.getName(), heal);
@@ -186,7 +186,7 @@ public class StageBattle extends Stage {
 			bomb.fucntion(monster);
 			info = String.format("[%s]가 [%s]를 사용해 [%s]를 %d의 데미지로 공격합니다.", hero.getName(), bomb.getName(),
 					monster.getName(), bomb.getDamage());
-			
+
 			if (monster.isDead()) {
 				info += String.format("\n[%s]가 죽었습니다!", monster.getName());
 			}
@@ -232,7 +232,7 @@ public class StageBattle extends Stage {
 		String info = null;
 		if (skilled == 0) {
 			if (monster instanceof MonsterSlime) {
-				info = String.format("[자가재생][%s]가 %s만큼 자가회복을 했습니다.", monster.getName(),value);
+				info = String.format("[자가재생][%s]가 %s만큼 자가회복을 했습니다.", monster.getName(), value);
 			} else if (monster instanceof MonsterBat) {
 				info = String.format("[흡혈][%s]가 [%s]에게 %d만큼의 피해를 준 뒤, %d만큼 회복합니다.", monster.getName(), hero.getName(),
 						value, value * 2);
@@ -253,6 +253,33 @@ public class StageBattle extends Stage {
 		Color.redPrint(monstersAction);
 	}
 
+	private void result() {
+		if (checkPlayersAllDie()) {
+			Color.redPrintln("전투에 실패하였습니다...");
+			return;
+		}
+
+		for (Unit monster : monsters) {
+			int exp = monster.getExp();
+			for (Unit hero : party) {
+				Hero target = (Hero) hero;
+				target.setExp(exp);
+				String info = target.checkLevelUp();
+
+				if (info != null) {
+					if (target instanceof HeroWarrior)
+						Color.cyanPrintln(info);
+					else if (target instanceof HeroWizard)
+						Color.purplePrintln(info);
+					else if (target instanceof HeroPaladin)
+						Color.bluePrintln(info);
+					else if (target instanceof HeroPrist)
+						Color.yellowPrintln(info);
+				}
+			}
+		}
+	}
+
 	public void run() {
 		while (checkNext()) {
 			printMenu();
@@ -260,6 +287,7 @@ public class StageBattle extends Stage {
 			String monstersAction = attackOfMonsters();
 			printTurnStatus(heroesAction, monstersAction);
 		}
+		result();
 	}
 
 }
