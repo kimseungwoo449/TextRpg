@@ -1,6 +1,8 @@
 package textRpg;
 
+import java.util.ArrayList;
 import java.util.Random;
+
 
 public class UnitManager {
 	private static UnitManager instance = new UnitManager();
@@ -51,5 +53,30 @@ public class UnitManager {
 
 	private String randomName(String[] targetNameArray) {
 		return targetNameArray[ran.nextInt(targetNameArray.length)];
+	}
+	
+	public ArrayList<Monster> createMonsters() {
+		ArrayList<Monster> monsters = new ArrayList<Monster>();
+		Class<?> params[] = new Class<?>[] { int.class, int.class, int.class };
+		int rNum = ran.nextInt(5)+1;
+		for (int i = 0; i < rNum; i++) {
+			String monsterType = randomName(monsterClassName);
+
+			try {
+				Class<?> clazz = Class.forName(PATH+monsterType);
+				int hp = ran.nextInt(100) + 120;
+				int power = ran.nextInt(10) + 15;
+				int exp = ran.nextInt(15) + 10;
+				Object obj = clazz.getDeclaredConstructor(params).newInstance(hp, power, exp);
+				Monster temp = (Monster)obj;
+				monsters.add(temp);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		return monsters;
 	}
 }
