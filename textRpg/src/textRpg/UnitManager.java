@@ -55,8 +55,8 @@ public class UnitManager {
 		return targetNameArray[ran.nextInt(targetNameArray.length)];
 	}
 	
-	public ArrayList<Monster> createMonsters() {
-		ArrayList<Monster> monsters = new ArrayList<Monster>();
+	public ArrayList<Unit> createMonsters() {
+		ArrayList<Unit> monsters = new ArrayList<Unit>();
 		Class<?> params[] = new Class<?>[] { int.class, int.class, int.class };
 		int rNum = ran.nextInt(5)+1;
 		for (int i = 0; i < rNum; i++) {
