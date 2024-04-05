@@ -52,23 +52,22 @@ abstract public class Unit {
 	}
 
 	public void setOffensivePower(int grade) {
-		set(grade,this.offensivePower);
+		this.offensivePower = set(grade, this.offensivePower);
 	}
 
-	private void set(int grade, int myAbility) {
-		if (grade == 1)
-			return;
-		else if (grade == 2)
+	private int set(int grade, int myAbility) {
+		if (grade == 2)
 			myAbility *= 1.5;
 		else if (grade == 3)
 			myAbility *= 2;
+		return myAbility;
 	}
 
 	public void setMaxHp(int grade) {
-		set(grade,this.maxHp);
+		this.maxHp = set(grade, this.maxHp);
 		this.curHp = this.maxHp;
 	}
-	
+
 	abstract public int skill(Unit target);
 
 	public void setCurHp(int heal) {
