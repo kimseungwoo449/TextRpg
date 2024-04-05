@@ -251,7 +251,7 @@ public class User {
 		}
 
 		Hero hero = myHero.get(heroIndex);
-		if ((hero.getArmor() != 0 || item instanceof ItemArmor)
+		if ((hero.getArmor() != 0 && item instanceof ItemArmor)
 				|| (hero.getExtraPower() != 0 && item instanceof ItemWeapon)) {
 			Color.redPrintln("해당 영웅은 이미 장착 중인 아이템 종류입니다.");
 			return;
