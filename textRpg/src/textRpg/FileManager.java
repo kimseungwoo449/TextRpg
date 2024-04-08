@@ -16,10 +16,10 @@ public class FileManager {
 	private BufferedReader br;
 	private FileWriter fw;
 
-	private final String fileName = "textRpg.txt";
+	private final String FILE_NAME = "textRpg.txt";
 
 	private FileManager() {
-		file = new File(fileName);
+		file = new File(FILE_NAME);
 	}
 
 	public static FileManager getInstance() {

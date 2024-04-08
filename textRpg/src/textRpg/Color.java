@@ -19,16 +19,6 @@ public class Color {
 	public static final String CYAN_BACKGROUND = "\u001B[46m";
 	public static final String WHITE_BACKGROUND = "\u001B[47m";
 
-//	private static ColorPrint instance = new ColorPrint();
-//
-//	private ColorPrint() {
-//
-//	}
-//
-//	public static ColorPrint getInstance() {
-//		return instance;
-//	}
-
 	public static void redPrintln(String message) {
 		System.out.println(RED + message + RESET);
 	}
