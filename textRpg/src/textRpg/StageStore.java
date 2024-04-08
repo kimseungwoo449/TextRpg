@@ -29,6 +29,16 @@ public class StageStore extends Stage {
 
 	@Override
 	public void printMenu() {
+		printJang();
+		Color.greenPrintln("---------- " + this.getStageName() + " ----------");
+		Color.greenPrintln("---------- 목록 ----------");
+		Color.greenPrintln("[1] 소비 아이템");
+		Color.greenPrintln("[2] 장비 아이템");
+		Color.greenPrintln("[3] 장바구니에서 빼기");
+		Color.greenPrintln("[0] 구매");
+	}
+
+	private void printJang() {
 		if (jang.size() > 0) {
 			int totalPrice = 0;
 			Color.bluePrintln("------ 장바구니 ------");
@@ -39,12 +49,6 @@ public class StageStore extends Stage {
 			}
 			Color.cyanPrintln("총액 : " + totalPrice + "원");
 		}
-		Color.greenPrintln("---------- " + this.getStageName() + " ----------");
-		Color.greenPrintln("---------- 목록 ----------");
-		Color.greenPrintln("[1] 소비 아이템");
-		Color.greenPrintln("[2] 장비 아이템");
-		Color.greenPrintln("[3] 장바구니에서 빼기");
-		Color.greenPrintln("[0] 구매");
 	}
 
 	private void runMenu(int select) {
@@ -131,11 +135,9 @@ public class StageStore extends Stage {
 	}
 
 	private void cancleItem() {
-		Color.bluePrintln("------ 장바구니 ------");
-		for (int i = 0; i < jang.size(); i++) {
-			Item item = jang.get(i);
-			Color.bluePrintln((i + 1) + ". " + item + " : " + item.getPrice() + "원");
-		}
+		if (jang.size() == 0)
+			return;
+		printJang();
 		int number = GameManager.inputNumber("아이템 번호(뒤로가기를 원하면 범위 밖의 번호입력)") - 1;
 
 		if (number < 0 || number >= jang.size())

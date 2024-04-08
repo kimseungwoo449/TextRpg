@@ -128,7 +128,7 @@ public class UserManager {
 		User user = users.get(log);
 
 		showMyHeroes();
-		int sellIndex = GameManager.inputNumber("판매할 영웅")-1;
+		int sellIndex = GameManager.inputNumber("판매할 영웅") - 1;
 
 		if (!user.sellHero(sellIndex)) {
 			Color.redPrintln("인덱스 재확인");
@@ -147,10 +147,18 @@ public class UserManager {
 	public void organizeParty() {
 		User user = users.get(log);
 
-		int[] heroIndex = new int[] { -1, -1, -1 };
 
 		user.showMyHero();
 		Color.greenPrintln("[파티의 인원은 3명입니다.]");
+		int[] heroIndex = choiceHeroes();
+		user.addParty(heroIndex);
+
+		Color.greenPrintln("파티 조직 완료.");
+	}
+
+	private int[] choiceHeroes() {
+		int[] heroIndex = new int[] { -1, -1, -1 };
+		User user = users.get(log);
 		for (int i = 0; i < heroIndex.length; i++) {
 			int index = GameManager.inputNumber("선택 " + (i + 1)) - 1;
 
@@ -162,9 +170,7 @@ public class UserManager {
 
 			heroIndex[i] = index;
 		}
-		user.addParty(heroIndex);
-
-		Color.greenPrintln("파티 조직 완료.");
+		return heroIndex;
 	}
 
 	private boolean checkIndex(int[] heroIndex, int index) {
@@ -190,71 +196,71 @@ public class UserManager {
 		User user = users.get(log);
 		user.showParties();
 	}
-	
-	public ArrayList<Unit> getParty(int index){
+
+	public ArrayList<Unit> getParty(int index) {
 		return users.get(log).getParty(index);
 	}
-	
+
 	public void buyItem() {
 		User user = users.get(log);
 		String userCashInfo = String.format("%s님의 현재 소지금 : %d원", user.getId(), user.getCash());
 		Color.greenPrintln(userCashInfo);
 		ArrayList<Item> jang = store.run();
-		
-		if (jang.size()==0) {
+
+		if (jang.size() == 0) {
 			return;
 		}
-		
+
 		int totalPrice = 0;
 		for (Item item : jang) {
 			totalPrice += item.getPrice();
 		}
-		
-		if (totalPrice>user.getCash()) {
+
+		if (totalPrice > user.getCash()) {
 			String info = String.format("소지금이 부족합니다. 현재 소지금 %d원", user.getCash());
 			Color.redPrintln(info);
 		} else {
 			for (Item item : jang) {
 				user.buyItem(item);
 			}
-			
-			String info = String.format("구매 성공. 현재 소지금 %d원",user.getCash());
+
+			String info = String.format("구매 성공. 현재 소지금 %d원", user.getCash());
 			Color.greenPrintln(info);
 		}
 	}
-	
+
 	public void showMyInventory() {
 		User user = users.get(log);
 		user.printInventory();
 	}
-	
+
 	public void showConsumableInventory() {
 		User user = users.get(log);
 		Color.greenPrintln("--------- 인벤토리 ----------");
 		user.viewConsumableItem();
 	}
-	
+
 	public Item getItem(int itmeIndex) {
 		User user = users.get(log);
-		return user.getItem( itmeIndex);
+		return user.getItem(itmeIndex);
 	}
-	
+
 	public int getConsumableItemSize() {
-		User user =users.get(log);
+		User user = users.get(log);
 		return user.getConsumableItemSize();
 	}
-	
+
 	public void battle() {
 		User user = users.get(log);
 		user.showParties();
 		int number = GameManager.inputNumber("사용할 파티 번호");
 		ArrayList<Unit> party = user.getParty(number);
-		
-		if(party==null) {
+
+		if (party == null) {
 			Color.redPrintln("파티 번호를 재확인 해주세요.");
 			return;
 		}
-		
+
 		ArrayList<Unit> monsters = unitManager.createMonsters();
 		StageBattle battleStage = new StageBattle(party, monsters);
 		battleStage.run();
