@@ -2,6 +2,8 @@ package textRpg;
 
 interface Equipable {
 	public void setNameAndPrice(int grade);
+	public void setEquipedHeroIndex(int heroIndex);
+	public int getEquipedHeroIndex();
 }
 
 interface Consumable {
@@ -10,9 +12,7 @@ interface Consumable {
 
 abstract public class Item {
 	private int price;
-	private boolean isEquiped;
 	private String name;
-	private Hero equipedHero;
 
 	public Item(String name, int price) {
 		this.name = name;
@@ -39,22 +39,6 @@ abstract public class Item {
 
 	public void setPrice(int price) {
 		this.price = price;
-	}
-
-	public boolean isEquiped() {
-		return this.isEquiped;
-	}
-
-	public void setIsEquiped() {
-		this.isEquiped = this.isEquiped == true ? false : true;
-	}
-
-	public void setEquipedHero(Hero hero) {
-		this.equipedHero = this.equipedHero == null ? hero : null;
-	}
-	
-	public Hero getEquipedHero() {
-		return this.equipedHero;
 	}
 	
 	@Override

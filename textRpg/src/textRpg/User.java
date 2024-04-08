@@ -97,13 +97,23 @@ public class User {
 
 		Hero targetHero = this.myHero.get(index);
 		int grade = targetHero.getGrade();
-
+		
 		cash += 300 * grade;
+		deleteHeroInEquipableItem(index);
 		this.myHero.remove(index);
 		deleteHeroInParty(targetHero);
+		
 		return true;
 	}
-
+	
+	private void deleteHeroInEquipableItem(int index) {
+		for(Item item : equipableItem) {
+			Equipable equipItem = (Equipable)item;
+			if(equipItem.getEquipedHeroIndex()==index)
+				equipItem.setEquipedHeroIndex(-1);
+		}
+	}
+	
 	private void deleteHeroInParty(Hero targetHero) {
 		for (int i = 1; i < partyNumber; i++) {
 			ArrayList<Unit> party = parties.get(i);
