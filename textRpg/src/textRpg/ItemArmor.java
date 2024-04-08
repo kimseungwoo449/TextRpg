@@ -7,9 +7,11 @@ public class ItemArmor extends Item implements Equipable {
 
 	private int grade;
 	private int armor;
+	private int equipedHeroIndex;
 
 	public ItemArmor(int grade) {
 		setNameAndPrice(grade);
+		this.equipedHeroIndex = -1;
 	}
 
 	@Override
@@ -35,29 +37,35 @@ public class ItemArmor extends Item implements Equipable {
 	@Override
 	public void fucntion(Unit target) {
 		Hero hero = (Hero) target;
-		if (!super.isEquiped()) {
+		if (this.equipedHeroIndex == -1) {
 			hero.setArmor(armor);
-			super.setIsEquiped();
-			super.setEquipedHero(hero);
 		} else {
 			hero.setArmor(0);
-			super.setIsEquiped();
-			super.setEquipedHero(hero);
 		}
 	}
 
 	public int getGrade() {
 		return this.grade;
 	}
-	
+
 	public int getArmor() {
 		return this.armor;
 	}
-	
+
 	@Override
 	public String toString() {
 		String info = String.format("%s 방어력 : %d", super.toString(), this.armor);
 		return info;
+	}
+
+	@Override
+	public void setEquipedHeroIndex(int heroIndex) {
+		this.equipedHeroIndex = heroIndex;
+	}
+	
+	@Override
+	public int getEquipedHeroIndex() {
+		return this.equipedHeroIndex;
 	}
 
 }

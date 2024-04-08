@@ -225,7 +225,9 @@ public class User {
 	private void viewEquipableItem() {
 		int number = 1;
 		for (Item item : equipableItem) {
-			String info = String.format("%d. %s %s", number++, item, item.isEquiped() ? "[장착중]" : "");
+			Equipable equipItem = (Equipable) item;
+			String info = String.format("%d. %s %s", number++, equipItem,
+					equipItem.getEquipedHeroIndex() != -1 ? "[장착중]" : "");
 			Color.cyanPrintln(info);
 		}
 		Color.greenPrintln("[1] 장착");
@@ -244,11 +246,18 @@ public class User {
 
 	private void equip() {
 		int itemIndex = GameManager.inputNumber("장착할 아이템 번호") - 1;
-		if (itemIndex < 0 || itemIndex >= equipableItem.size() || this.equipableItem.get(itemIndex).isEquiped()) {
+		if (itemIndex < 0 || itemIndex >= equipableItem.size()) {
 			Color.redPrintln("번호를 다시 확인해 주세요.");
 			return;
 		}
+
 		Item item = this.equipableItem.get(itemIndex);
+		Equipable equipItem = (Equipable) item;
+
+		if (equipItem.getEquipedHeroIndex() != -1) {
+			Color.redPrintln("이미 다른 영웅이 장착중인 아이템입니다.");
+			return;
+		}
 
 		showMyHero();
 		int heroIndex = GameManager.inputNumber("장착할 영웅 번호") - 1;
@@ -264,19 +273,30 @@ public class User {
 			Color.redPrintln("해당 영웅은 이미 장착 중인 아이템 종류입니다.");
 			return;
 		}
-
+		
 		item.fucntion(hero);
+		equipItem.setEquipedHeroIndex(heroIndex);
 		Color.greenPrintln("장착완료.");
 	}
 
 	private void disarm() {
-		int itemIndex = GameManager.inputNumber("장착할 아이템 번호") - 1;
-		if (itemIndex < 0 || itemIndex >= equipableItem.size() || !this.equipableItem.get(itemIndex).isEquiped()) {
+		int itemIndex = GameManager.inputNumber("해제할 아이템 번호") - 1;
+		if (itemIndex < 0 || itemIndex >= equipableItem.size()) {
 			Color.redPrintln("번호를 다시 확인해 주세요.");
 			return;
 		}
 		Item item = this.equipableItem.get(itemIndex);
-		item.fucntion(item.getEquipedHero());
+		Equipable equipItem = (Equipable) item;
+
+		if (equipItem.getEquipedHeroIndex() == -1) {
+			Color.redPrintln("장착중인 아이템아닙니다.");
+			return;
+		}
+
+		int equipedHeroIndex = equipItem.getEquipedHeroIndex();
+		item.fucntion(myHero.get(equipedHeroIndex));
+		equipItem.setEquipedHeroIndex(-1);
+
 		Color.greenPrintln("해제완료.");
 	}
 
@@ -314,9 +334,9 @@ public class User {
 			}
 			info += "/";
 		}
-		if(info.length()>0)
-			info = info.substring(0,info.length()-1);
-		info+="\n";
+		if (info.length() > 0)
+			info = info.substring(0, info.length() - 1);
+		info += "\n";
 		return info;
 	}
 
@@ -334,9 +354,9 @@ public class User {
 					hero.getOffensivePower());
 			info += String.format("%d,%d/", hero.getMaxExp(), hero.getExp());
 		}
-		if(info.length()>0)
-			info = info.substring(0,info.length()-1);
-		info+="\n";
+		if (info.length() > 0)
+			info = info.substring(0, info.length() - 1);
+		info += "\n";
 		return info;
 	}
 
@@ -351,9 +371,9 @@ public class User {
 				info += String.format("%s,%d,%d/", temp.getName(), temp.getPrice(), temp.getRecoveryAmount());
 			}
 		}
-		if(info.length()>0)
-			info = info.substring(0,info.length()-1);
-		info+="\n";
+		if (info.length() > 0)
+			info = info.substring(0, info.length() - 1);
+		info += "\n";
 		return info;
 	}
 
@@ -362,17 +382,17 @@ public class User {
 		for (Item item : equipableItem) {
 			if (item instanceof ItemArmor) {
 				ItemArmor temp = (ItemArmor) item;
-				info += String.format("%s,%d,%d,%s/", "방어구", temp.getGrade(), temp.getArmor(), temp.isEquiped() + "");
+				info += String.format("%s,%d,%d,%s/", "방어구", temp.getGrade(), temp.getArmor(), temp.getEquipedHeroIndex() + "");
 			} else if (item instanceof ItemWeapon) {
 				ItemWeapon temp = (ItemWeapon) item;
 				info += String.format("%s,%d,%d,%s/", "무기", temp.getGrade(), temp.getExtraPower(),
-						temp.isEquiped() + "");
+						temp.getEquipedHeroIndex() + "");
 
 			}
 		}
-		if(info.length()>0)
-			info = info.substring(0,info.length()-1);
-		info+="\n";
+		if (info.length() > 0)
+			info = info.substring(0, info.length() - 1);
+		info += "\n";
 		return info;
 	}
 
