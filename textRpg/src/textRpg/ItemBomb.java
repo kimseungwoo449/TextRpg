@@ -2,7 +2,7 @@ package textRpg;
 
 import java.util.Random;
 
-public class ItemBomb extends Item implements Consumable{
+public class ItemBomb extends Item implements Consumable {
 	private Random ran = new Random();
 	private int damage;
 
@@ -10,7 +10,7 @@ public class ItemBomb extends Item implements Consumable{
 		super("폭탄", 700);
 		this.damage = ran.nextInt(20) + 200; // 200~220데미지
 	}
-	
+
 	@Override
 	public void fucntion(Unit target) {
 		target.takeDamage(this.damage);
@@ -18,6 +18,10 @@ public class ItemBomb extends Item implements Consumable{
 
 	public int getDamage() {
 		return this.damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 
 	@Override

@@ -55,11 +55,25 @@ abstract public class Hero extends Unit {
 	public void setArmor(int armor) {
 		this.armor = armor;
 	}
-	
+
 	public int getMaxExp() {
 		return this.maxExp;
 	}
-	
+
+	public void setMaxExp(int maxExp) {
+		this.maxExp = maxExp;
+	}
+
+	public void loadAndSet(int lv, int extraPower, int armor, int maxHp, int cupHp, int offensivePower, int maxExp,
+			int exp) {
+		super.loadAndSet(maxHp, cupHp, offensivePower, exp);
+		this.lv = lv;
+		this.extraPower = extraPower;
+		this.armor = armor;
+		this.maxExp = maxExp;
+
+	}
+
 	private String stringOfThisGradeAndLevel() {
 		return String.format("[%s][Lv : %d]", this.grade == 1 ? "★" : this.grade == 2 ? "★★" : "★★★", this.lv);
 	}
@@ -69,8 +83,8 @@ abstract public class Hero extends Unit {
 		String info = stringOfThisGradeAndLevel();
 		info += super.toString();
 		info += String.format(" [EXP : %d/%d]", super.getExp(), maxExp);
-		info += String.format("%s%s", this.extraPower != 0 ? " [추가공격력 : "+this.extraPower+"]" : "",
-				this.armor != 0 ? " [방어력 : "+this.armor+"]" : "");
+		info += String.format("%s%s", this.extraPower != 0 ? " [추가공격력 : " + this.extraPower + "]" : "",
+				this.armor != 0 ? " [방어력 : " + this.armor + "]" : "");
 		return info;
 	}
 

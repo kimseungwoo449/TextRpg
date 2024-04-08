@@ -28,7 +28,14 @@ abstract public class Unit {
 			target.isDead = true;
 		}
 	}
-
+	
+	public void loadAndSet(int maxHp,int cupHp,int offensivePower,int exp) {
+		this.maxHp =maxHp;
+		this.curHp = cupHp;
+		this.offensivePower = offensivePower;
+		this.exp = exp;
+	}
+	
 	public void takeDamage(int attack) {
 		this.curHp -= attack;
 

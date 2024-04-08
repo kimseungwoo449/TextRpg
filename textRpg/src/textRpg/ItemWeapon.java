@@ -28,7 +28,9 @@ public class ItemWeapon extends Item implements Equipable {
 	public void setNameAndPrice(int grade) {
 		if (grade < 1 || grade > 3)
 			return;
-
+		
+		this.grade = grade;
+		
 		if (grade == 1) {
 			super.setName("돌 검");
 			super.setPrice(500);
@@ -51,6 +53,11 @@ public class ItemWeapon extends Item implements Equipable {
 	public int getExtraPower() {
 		return this.extraPower;
 	}
+
+	public void setExtraPower(int extraPower) {
+		this.extraPower = extraPower;
+	}
+
 
 	@Override
 	public String toString() {

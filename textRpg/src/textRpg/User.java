@@ -64,6 +64,26 @@ public class User {
 		this.password = password;
 	}
 
+	public void setMyHero(ArrayList<Hero> myHero) {
+		this.myHero = myHero;
+	}
+
+	public void setConsumableItem(ArrayList<Item> consumList) {
+		this.consumableItem = consumList;
+	}
+
+	public void setEquipableItem(ArrayList<Item> equipList) {
+		this.equipableItem = equipList;
+	}
+
+	public void setParties(int partyNumber, int firstHero, int secondHero, int thirdHero) {
+		ArrayList<Unit> temp = new ArrayList<Unit>();
+		temp.add(myHero.get(firstHero));
+		temp.add(myHero.get(secondHero));
+		temp.add(myHero.get(thirdHero));
+		parties.put(partyNumber, temp);
+	}
+
 	private ArrayList<Hero> initialHeros() {
 		ArrayList<Hero> temp = new ArrayList<Hero>();
 		String[] className = { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };
@@ -97,23 +117,23 @@ public class User {
 
 		Hero targetHero = this.myHero.get(index);
 		int grade = targetHero.getGrade();
-		
+
 		cash += 300 * grade;
 		deleteHeroInEquipableItem(index);
 		this.myHero.remove(index);
 		deleteHeroInParty(targetHero);
-		
+
 		return true;
 	}
-	
+
 	private void deleteHeroInEquipableItem(int index) {
-		for(Item item : equipableItem) {
-			Equipable equipItem = (Equipable)item;
-			if(equipItem.getEquipedHeroIndex()==index)
+		for (Item item : equipableItem) {
+			Equipable equipItem = (Equipable) item;
+			if (equipItem.getEquipedHeroIndex() == index)
 				equipItem.setEquipedHeroIndex(-1);
 		}
 	}
-	
+
 	private void deleteHeroInParty(Hero targetHero) {
 		for (int i = 1; i < partyNumber; i++) {
 			ArrayList<Unit> party = parties.get(i);
@@ -283,7 +303,7 @@ public class User {
 			Color.redPrintln("해당 영웅은 이미 장착 중인 아이템 종류입니다.");
 			return;
 		}
-		
+
 		item.fucntion(hero);
 		equipItem.setEquipedHeroIndex(heroIndex);
 		Color.greenPrintln("장착완료.");
@@ -392,7 +412,8 @@ public class User {
 		for (Item item : equipableItem) {
 			if (item instanceof ItemArmor) {
 				ItemArmor temp = (ItemArmor) item;
-				info += String.format("%s,%d,%d,%s/", "방어구", temp.getGrade(), temp.getArmor(), temp.getEquipedHeroIndex() + "");
+				info += String.format("%s,%d,%d,%s/", "방어구", temp.getGrade(), temp.getArmor(),
+						temp.getEquipedHeroIndex() + "");
 			} else if (item instanceof ItemWeapon) {
 				ItemWeapon temp = (ItemWeapon) item;
 				info += String.format("%s,%d,%d,%s/", "무기", temp.getGrade(), temp.getExtraPower(),

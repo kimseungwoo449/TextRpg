@@ -277,43 +277,160 @@ public class UserManager {
 			info += user.makeConsumableItemInfo();
 			info += "equipableItem/";
 			info += user.makeEquipableItemInfo();
-			info+="parties/";
-			info+=user.makePartiesInfo();
+			info += "parties/";
+			info += user.makePartiesInfo();
 		}
-		if(info.length()>0)
-			info=info.substring(0,info.length()-1);
+		if (info.length() > 0)
+			info = info.substring(0, info.length() - 1);
 		return info;
 	}
-	
+
 	public void load(String info) {
-		if(info.length()<1)
+		if (info.length() < 1)
 			return;
-		
+
 		String[] dataArr = info.split("\n");
-		int userCount = countUsers(dataArr);
-		
-		for(int i =0;i<userCount;i++) {
-			if(dataArr[i].equals("userInfo")) {
-				String[] userInfo = dataArr[i+1].split(",");
-				String id = userInfo[i+1];
-				String password = userInfo[i+2];
-				int cash = Integer.parseInt(userInfo[i+3]);
-				int partyNumber = Integer.parseInt(userInfo[i+4]);
-				User user = new User(id,password);
-				user.setCash(cash);
-				user.setPartyNumber(partyNumber);
-			}
-			
-		}
-	}
-	
-	private int countUsers(String[]dataArr) {
 		int userCount = 0;
-		for(int i =0;i<dataArr.length;i++) {
-			if(dataArr[i].equals("userInfo"))
-				userCount++;
+
+		for (int i = 0; i < dataArr.length; i += 5) {
+			String[] userInfo = dataArr[i].split("/");
+			loadUserInfo(userInfo);
+			String[] myHeroInfo = dataArr[i + 1].split("/");
+			loadMyHeroInfo(myHeroInfo, userCount);
+			String[] consumableItemInfo = dataArr[i + 2].split("/");
+			loadConsumableItemInfo(consumableItemInfo, userCount);
+			String[] equipableItemInfo = dataArr[i + 3].split("/");
+			loadEquipableItemInfo(equipableItemInfo, userCount);
+			String[] partiesInfo = dataArr[i + 4].split("/");
+			loadPartiesInfo(partiesInfo, userCount);
+			userCount++;
 		}
-		return userCount;
 	}
-	
+
+	private void loadPartiesInfo(String[] partiesInfo, int userCount) {
+		User user = users.get(userCount);
+		for (int i = 1; i < partiesInfo.length; i++) {
+			String temp[] = partiesInfo[i].split(",");
+			int partyNumber = Integer.parseInt(temp[0]);
+			int firstHero = Integer.parseInt(temp[1]);
+			int secondHero = Integer.parseInt(temp[2]);
+			int thirdHero = Integer.parseInt(temp[3]);
+			user.setParties(partyNumber, firstHero, secondHero, thirdHero);
+		}
+	}
+
+	private void loadEquipableItemInfo(String[] equipableItemInfo, int userCount) {
+		ArrayList<Item> equipList = new ArrayList<Item>();
+		for (int i = 1; i < equipableItemInfo.length; i++) {
+			String[] temp = equipableItemInfo[i].split(",");
+			String name = temp[0];
+			int grade = Integer.parseInt(temp[1]);
+			int value = Integer.parseInt(temp[2]);
+			int heroIndex = Integer.parseInt(temp[3]);
+			if (name.equals("무기")) {
+				equipList.add(makeWeapon(grade, value, heroIndex));
+			} else if (name.equals("방어구")) {
+				equipList.add(makeArmor(grade, value, heroIndex));
+			}
+		}
+		users.get(userCount).setEquipableItem(equipList);
+	}
+
+	private ItemWeapon makeWeapon(int grade, int value, int heroIndex) {
+		ItemWeapon weapon = new ItemWeapon(grade);
+		weapon.setExtraPower(value);
+		weapon.setEquipedHeroIndex(heroIndex);
+		return weapon;
+	}
+
+	private ItemArmor makeArmor(int grade, int value, int heroIndex) {
+		ItemArmor armor = new ItemArmor(grade);
+		armor.setArmor(value);
+		armor.setEquipedHeroIndex(heroIndex);
+		return armor;
+	}
+
+	private void loadConsumableItemInfo(String[] consumableItemInfo, int userCount) {
+		ArrayList<Item> consumList = new ArrayList<Item>();
+		for (int i = 1; i < consumableItemInfo.length; i++) {
+			String[] temp = consumableItemInfo[i].split(",");
+			String name = temp[0];
+			int value = Integer.parseInt(temp[2]);
+			if (name.equals("폭탄")) {
+				consumList.add(makeBomb(value));
+			} else if (name.equals("포션")) {
+				consumList.add(makePotion(value));
+			}
+		}
+		users.get(userCount).setConsumableItem(consumList);
+	}
+
+	private ItemPotion makePotion(int recoveryAmount) {
+		ItemPotion potion = new ItemPotion();
+		potion.setRecoveryAmount(recoveryAmount);
+		;
+		return potion;
+	}
+
+	private ItemBomb makeBomb(int damage) {
+		ItemBomb bomb = new ItemBomb();
+		bomb.setDamage(damage);
+		return bomb;
+	}
+
+	private void loadUserInfo(String userInfo[]) {
+		String info[] = userInfo[1].split(",");
+		String id = info[0];
+		String password = info[1];
+		int cash = Integer.parseInt(info[2]);
+		int partyNumber = Integer.parseInt(info[3]);
+
+		User user = new User(id, password);
+		user.setCash(cash);
+		user.setPartyNumber(partyNumber);
+		users.add(user);
+	}
+
+	private void loadMyHeroInfo(String[] myHeroInfo, int userCount) {
+		Class<?>[] params = new Class<?>[] { int.class };
+		ArrayList<Hero> heroList = new ArrayList<Hero>();
+		for (int i = 1; i < myHeroInfo.length; i++) {
+			String[] temp = myHeroInfo[i].split(",");
+			int grade = Integer.parseInt(temp[0]);
+			int lv = Integer.parseInt(temp[1]);
+			String name = temp[2];
+			String className = returnClassName(name);
+			int extraPower = Integer.parseInt(temp[3]);
+			int armor = Integer.parseInt(temp[4]);
+			int maxHp = Integer.parseInt(temp[5]);
+			int curHp = Integer.parseInt(temp[6]);
+			int offensivePower = Integer.parseInt(temp[7]);
+			int maxExp = Integer.parseInt(temp[8]);
+			int exp = Integer.parseInt(temp[9]);
+
+			String path = "textRpg.Hero" + className;
+			try {
+				Class<?> clazz = Class.forName(path);
+				Object obj = clazz.getDeclaredConstructor(params).newInstance(grade);
+				Hero hero = (Hero) obj;
+				hero.loadAndSet(lv, extraPower, armor, maxHp, curHp, offensivePower, maxExp, exp);
+				heroList.add(hero);
+			} catch (Exception e) {
+			}
+		}
+		users.get(userCount).setMyHero(heroList);
+	}
+
+	private String returnClassName(String name) {
+		if (name.equals("전사"))
+			return "Warrior";
+		else if (name.equals("마법사"))
+			return "Wizard";
+		else if (name.equals("성직자"))
+			return "Prist";
+		else if (name.equals("성기사"))
+			return "Paladin";
+		return null;
+	}
+
 }

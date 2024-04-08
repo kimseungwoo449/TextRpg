@@ -17,6 +17,8 @@ public class StageTitle extends Stage {
 		
 	private StageTitle() {
 		super("TEXT RPG");
+		String loadData = fileManager.load();
+		userManager.load(loadData);
 	}
 
 	public static StageTitle getInstance() {
