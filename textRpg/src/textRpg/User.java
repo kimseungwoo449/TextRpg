@@ -207,7 +207,7 @@ public class User {
 			viewEquipableItem();
 	}
 
-	private void viewConsumableItem() {
+	public void viewConsumableItem() {
 		int number = 1;
 		for (Item item : consumableItem) {
 			Color.cyanPrintln(number++ + ". " + item);
@@ -278,6 +278,10 @@ public class User {
 		Item item = consumableItem.get(itemIndex);
 		consumableItem.remove(itemIndex);
 		return item;
+	}
+
+	public int getConsumableItemSize() {
+		return this.consumableItem.size();
 	}
 
 	public ArrayList<Unit> getParty(int index) {

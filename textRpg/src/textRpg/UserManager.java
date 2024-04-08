@@ -228,9 +228,20 @@ public class UserManager {
 		user.printInventory();
 	}
 	
+	public void showConsumableInventory() {
+		User user = users.get(log);
+		Color.greenPrintln("--------- 인벤토리 ----------");
+		user.viewConsumableItem();
+	}
+	
 	public Item getItem(int itmeIndex) {
 		User user = users.get(log);
 		return user.getItem( itmeIndex);
+	}
+	
+	public int getConsumableItemSize() {
+		User user =users.get(log);
+		return user.getConsumableItemSize();
 	}
 	
 	public void battle() {

@@ -9,7 +9,7 @@ public class HeroWizard extends Hero {
 	@Override
 	public int skill(Unit target) {
 		int myOffensivePower = super.getOffensivePower();
-		myOffensivePower = super.getExtraPower();
+		myOffensivePower += super.getExtraPower();
 		int attack = myOffensivePower + (int) (myOffensivePower * 1.5);
 		return attack;
 	}
