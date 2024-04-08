@@ -269,20 +269,51 @@ public class UserManager {
 	public String save() {
 		String info = "";
 		for (User user : users) {
-			info += "userInfo\n";
+			info += "userInfo/";
 			info += user.makeUserInfo();
-			info += "myHero\n";
+			info += "myHero/";
 			info += user.makeMyHeroInfo();
-			info += "consumableItem\n";
+			info += "consumableItem/";
 			info += user.makeConsumableItemInfo();
-			info += "equipableItem\n";
+			info += "equipableItem/";
 			info += user.makeEquipableItemInfo();
-			info+="parties\n";
+			info+="parties/";
 			info+=user.makePartiesInfo();
 		}
 		if(info.length()>0)
 			info=info.substring(0,info.length()-1);
 		return info;
+	}
+	
+	public void load(String info) {
+		if(info.length()<1)
+			return;
+		
+		String[] dataArr = info.split("\n");
+		int userCount = countUsers(dataArr);
+		
+		for(int i =0;i<userCount;i++) {
+			if(dataArr[i].equals("userInfo")) {
+				String[] userInfo = dataArr[i+1].split(",");
+				String id = userInfo[i+1];
+				String password = userInfo[i+2];
+				int cash = Integer.parseInt(userInfo[i+3]);
+				int partyNumber = Integer.parseInt(userInfo[i+4]);
+				User user = new User(id,password);
+				user.setCash(cash);
+				user.setPartyNumber(partyNumber);
+			}
+			
+		}
+	}
+	
+	private int countUsers(String[]dataArr) {
+		int userCount = 0;
+		for(int i =0;i<dataArr.length;i++) {
+			if(dataArr[i].equals("userInfo"))
+				userCount++;
+		}
+		return userCount;
 	}
 	
 }

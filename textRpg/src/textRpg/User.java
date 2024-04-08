@@ -312,8 +312,11 @@ public class User {
 					}
 				}
 			}
-			info += "\n";
+			info += "/";
 		}
+		if(info.length()>0)
+			info = info.substring(0,info.length()-1);
+		info+="\n";
 		return info;
 	}
 
@@ -329,8 +332,11 @@ public class User {
 			info += String.format("%d,%d,%s,%d,", hero.getGrade(), hero.getLv(), hero.getName(), hero.getExtraPower());
 			info += String.format("%d,%d,%d,%d,", hero.getArmor(), hero.getMaxHp(), hero.getCurHp(),
 					hero.getOffensivePower());
-			info += String.format("%d,%d\n", hero.getMaxExp(), hero.getExp());
+			info += String.format("%d,%d/", hero.getMaxExp(), hero.getExp());
 		}
+		if(info.length()>0)
+			info = info.substring(0,info.length()-1);
+		info+="\n";
 		return info;
 	}
 
@@ -339,12 +345,15 @@ public class User {
 		for (Item item : consumableItem) {
 			if (item instanceof ItemBomb) {
 				ItemBomb temp = (ItemBomb) item;
-				info += String.format("%s,%d,%d\n", temp.getName(), temp.getPrice(), temp.getDamage());
+				info += String.format("%s,%d,%d/", temp.getName(), temp.getPrice(), temp.getDamage());
 			} else if (item instanceof ItemPotion) {
 				ItemPotion temp = (ItemPotion) item;
-				info += String.format("%s,%d,%d\n", temp.getName(), temp.getPrice(), temp.getRecoveryAmount());
+				info += String.format("%s,%d,%d/", temp.getName(), temp.getPrice(), temp.getRecoveryAmount());
 			}
 		}
+		if(info.length()>0)
+			info = info.substring(0,info.length()-1);
+		info+="\n";
 		return info;
 	}
 
@@ -353,14 +362,17 @@ public class User {
 		for (Item item : equipableItem) {
 			if (item instanceof ItemArmor) {
 				ItemArmor temp = (ItemArmor) item;
-				info += String.format("%s,%d,%d,%s\n", "방어구", temp.getGrade(), temp.getArmor(), temp.isEquiped() + "");
+				info += String.format("%s,%d,%d,%s/", "방어구", temp.getGrade(), temp.getArmor(), temp.isEquiped() + "");
 			} else if (item instanceof ItemWeapon) {
 				ItemWeapon temp = (ItemWeapon) item;
-				info += String.format("%s,%d,%d,%s\n", "무기", temp.getGrade(), temp.getExtraPower(),
+				info += String.format("%s,%d,%d,%s/", "무기", temp.getGrade(), temp.getExtraPower(),
 						temp.isEquiped() + "");
 
 			}
 		}
+		if(info.length()>0)
+			info = info.substring(0,info.length()-1);
+		info+="\n";
 		return info;
 	}
 
