@@ -1,6 +1,7 @@
 package textRpg;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class UserManager {
 	public static int log;
@@ -147,7 +148,6 @@ public class UserManager {
 	public void organizeParty() {
 		User user = users.get(log);
 
-
 		user.showMyHero();
 		Color.greenPrintln("[파티의 인원은 3명입니다.]");
 		int[] heroIndex = choiceHeroes();
@@ -265,4 +265,24 @@ public class UserManager {
 		StageBattle battleStage = new StageBattle(party, monsters);
 		battleStage.run();
 	}
+
+	public String save() {
+		String info = "";
+		for (User user : users) {
+			info += "userInfo\n";
+			info += user.makeUserInfo();
+			info += "myHero\n";
+			info += user.makeMyHeroInfo();
+			info += "consumableItem\n";
+			info += user.makeConsumableItemInfo();
+			info += "equipableItem\n";
+			info += user.makeEquipableItemInfo();
+			info+="parties\n";
+			info+=user.makePartiesInfo();
+		}
+		if(info.length()>0)
+			info=info.substring(0,info.length()-1);
+		return info;
+	}
+	
 }

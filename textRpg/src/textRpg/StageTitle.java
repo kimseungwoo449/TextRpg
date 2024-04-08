@@ -7,12 +7,14 @@ public class StageTitle extends Stage {
 	private final int LOG_IN = 4;
 	private final int LOG_OUT = 5;
 	private final int LOBBY = 6;
+	private final int SAVE = 7;
 	private final int EXIT = 0;
-
+	
 	private static StageTitle instance = new StageTitle();
 	private UserManager userManager = UserManager.getInstance();
 	private StageLobby stageLobby = StageLobby.getInstance();
-	
+	private FileManager fileManager = FileManager.getInstance();
+		
 	private StageTitle() {
 		super("TEXT RPG");
 	}
@@ -30,6 +32,7 @@ public class StageTitle extends Stage {
 		Color.greenPrintln("[4] 로그	인");
 		Color.greenPrintln("[5] 로그아웃");
 		Color.greenPrintln("[6] 로	비");
+		Color.greenPrintln("[7] 저	장");
 		Color.greenPrintln("[0] 종	료");
 	}
 
@@ -63,6 +66,8 @@ public class StageTitle extends Stage {
 			logout();
 		else if (select == LOBBY)
 			lobby();
+		else if (select == SAVE)
+			save();
 		else if (select == EXIT)
 			GameManager.isRun = false;
 	}
@@ -90,7 +95,12 @@ public class StageTitle extends Stage {
 	private void lobby() {
 		stageLobby.run();
 	}
-
+	
+	private void save() {
+		String info = userManager.save();
+		fileManager.save(info);
+	}
+	
 	public void run() {
 		printMenu();
 		int select = GameManager.inputNumber("Menu");

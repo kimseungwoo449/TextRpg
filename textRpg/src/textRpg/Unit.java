@@ -42,7 +42,7 @@ abstract public class Unit {
 	public int getExp() {
 		return this.exp;
 	}
-
+	
 	public void setExp(int exp) {
 		this.exp += exp;
 	}
@@ -54,7 +54,15 @@ abstract public class Unit {
 	public void setOffensivePower(int grade) {
 		this.offensivePower = set(grade, this.offensivePower);
 	}
-
+	
+	public int getMaxHp() {
+		return this.maxHp;
+	}
+	
+	public int getCurHp() {
+		return this.curHp;
+	}
+	
 	private int set(int grade, int myAbility) {
 		if (grade == 2)
 			myAbility *= 1.5;

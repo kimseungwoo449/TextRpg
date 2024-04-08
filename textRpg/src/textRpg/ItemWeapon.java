@@ -46,6 +46,14 @@ public class ItemWeapon extends Item implements Equipable{
 		}
 	}
 	
+	public int getGrade() {
+		return this.grade;
+	}
+	
+	public int getExtraPower() {
+		return this.extraPower;
+	}
+	
 	@Override
 	public String toString() {
 		String info = String.format("%s 공격력 : %d", super.toString(),this.extraPower);

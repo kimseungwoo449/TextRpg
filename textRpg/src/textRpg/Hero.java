@@ -55,7 +55,11 @@ abstract public class Hero extends Unit {
 	public void setArmor(int armor) {
 		this.armor = armor;
 	}
-
+	
+	public int getMaxExp() {
+		return this.maxExp;
+	}
+	
 	private String stringOfThisGradeAndLevel() {
 		return String.format("[%s][Lv : %d]", this.grade == 1 ? "★" : this.grade == 2 ? "★★" : "★★★", this.lv);
 	}

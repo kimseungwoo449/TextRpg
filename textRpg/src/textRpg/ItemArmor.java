@@ -46,6 +46,14 @@ public class ItemArmor extends Item implements Equipable {
 		}
 	}
 
+	public int getGrade() {
+		return this.grade;
+	}
+	
+	public int getArmor() {
+		return this.armor;
+	}
+	
 	@Override
 	public String toString() {
 		String info = String.format("%s 방어력 : %d", super.toString(), this.armor);

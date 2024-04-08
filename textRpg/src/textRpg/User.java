@@ -44,6 +44,14 @@ public class User {
 		return this.cash;
 	}
 
+	public void setCash(int cash) {
+		this.cash = cash;
+	}
+
+	public void setPartyNumber(int partyNumber) {
+		this.partyNumber = partyNumber;
+	}
+
 	public int getMyHeroSize() {
 		return this.myHero.size();
 	}
@@ -289,6 +297,71 @@ public class User {
 			return null;
 
 		return parties.get(index);
+	}
+
+	public String makePartiesInfo() {
+		String info = "";
+		for (int i = 1; i <= parties.size(); i++) {
+			ArrayList<Unit> temp = parties.get(i);
+			info += i;
+			for (int j = 0; j < myHero.size(); j++) {
+				for (Unit target : temp) {
+					if (target.equals(myHero.get(j))) {
+						info += "," + j;
+						break;
+					}
+				}
+			}
+			info += "\n";
+		}
+		return info;
+	}
+
+	public String makeUserInfo() {
+		String info = "";
+		info += String.format("%s,%s,%d,%d\n", this.id, this.password, this.cash, this.partyNumber);
+		return info;
+	}
+
+	public String makeMyHeroInfo() {
+		String info = "";
+		for (Hero hero : myHero) {
+			info += String.format("%d,%d,%s,%d,", hero.getGrade(), hero.getLv(), hero.getName(), hero.getExtraPower());
+			info += String.format("%d,%d,%d,%d,", hero.getArmor(), hero.getMaxHp(), hero.getCurHp(),
+					hero.getOffensivePower());
+			info += String.format("%d,%d\n", hero.getMaxExp(), hero.getExp());
+		}
+		return info;
+	}
+
+	public String makeConsumableItemInfo() {
+		String info = "";
+		for (Item item : consumableItem) {
+			if (item instanceof ItemBomb) {
+				ItemBomb temp = (ItemBomb) item;
+				info += String.format("%s,%d,%d\n", temp.getName(), temp.getPrice(), temp.getDamage());
+			} else if (item instanceof ItemPotion) {
+				ItemPotion temp = (ItemPotion) item;
+				info += String.format("%s,%d,%d\n", temp.getName(), temp.getPrice(), temp.getRecoveryAmount());
+			}
+		}
+		return info;
+	}
+
+	public String makeEquipableItemInfo() {
+		String info = "";
+		for (Item item : equipableItem) {
+			if (item instanceof ItemArmor) {
+				ItemArmor temp = (ItemArmor) item;
+				info += String.format("%s,%d,%d,%s\n", "방어구", temp.getGrade(), temp.getArmor(), temp.isEquiped() + "");
+			} else if (item instanceof ItemWeapon) {
+				ItemWeapon temp = (ItemWeapon) item;
+				info += String.format("%s,%d,%d,%s\n", "무기", temp.getGrade(), temp.getExtraPower(),
+						temp.isEquiped() + "");
+
+			}
+		}
+		return info;
 	}
 
 }
