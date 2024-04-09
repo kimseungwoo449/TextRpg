@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class UserManager {
 	public static int log;
+	
 	private static UserManager instance = new UserManager();
 	private UnitManager unitManager = UnitManager.getInstance();
 	private StageStore store = StageStore.getInstance();

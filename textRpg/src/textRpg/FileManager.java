@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class FileManager {
+	private final String FILE_NAME = "textRpg.txt";
+
 	private static FileManager instance = new FileManager();
 
 	private File file;
@@ -15,8 +17,6 @@ public class FileManager {
 	private FileReader fr;
 	private BufferedReader br;
 	private FileWriter fw;
-
-	private final String FILE_NAME = "textRpg.txt";
 
 	private FileManager() {
 		file = new File(FILE_NAME);

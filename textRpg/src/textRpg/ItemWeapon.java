@@ -13,7 +13,29 @@ public class ItemWeapon extends Item implements Equipable {
 		setNameAndPrice(grade);
 		equipedHeroIndex = -1;
 	}
+	
+	public int getGrade() {
+		return this.grade;
+	}
 
+	public int getExtraPower() {
+		return this.extraPower;
+	}
+
+	public void setExtraPower(int extraPower) {
+		this.extraPower = extraPower;
+	}
+	
+	@Override
+	public int getEquipedHeroIndex() {
+		return this.equipedHeroIndex;
+	}
+
+	@Override
+	public void setEquipedHeroIndex(int heroIndex) {
+		this.equipedHeroIndex = heroIndex;
+	}
+	
 	@Override
 	public void fucntion(Unit target) {
 		Hero hero = (Hero) target;
@@ -46,32 +68,9 @@ public class ItemWeapon extends Item implements Equipable {
 		}
 	}
 
-	public int getGrade() {
-		return this.grade;
-	}
-
-	public int getExtraPower() {
-		return this.extraPower;
-	}
-
-	public void setExtraPower(int extraPower) {
-		this.extraPower = extraPower;
-	}
-
-
 	@Override
 	public String toString() {
 		String info = String.format("%s 공격력 : %d", super.toString(), this.extraPower);
 		return info;
-	}
-
-	@Override
-	public void setEquipedHeroIndex(int heroIndex) {
-		this.equipedHeroIndex = heroIndex;
-	}
-
-	@Override
-	public int getEquipedHeroIndex() {
-		return this.equipedHeroIndex;
 	}
 }

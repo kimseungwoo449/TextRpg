@@ -1,7 +1,6 @@
 package textRpg;
 
 public class HeroPrist extends Hero {
-
 	public HeroPrist(int grade) {
 		super("성직자", 450, 50, grade);
 	}
@@ -14,5 +13,4 @@ public class HeroPrist extends Hero {
 		target.setCurHp(heal);
 		return heal;
 	}
-
 }

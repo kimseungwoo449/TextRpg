@@ -1,7 +1,6 @@
 package textRpg;
 
 public class MonsterSlime extends Monster {
-
 	public MonsterSlime(int maxHp, int offensivePower, int exp) {
 		super("슬라임", maxHp, offensivePower, exp);
 	}

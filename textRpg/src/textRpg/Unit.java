@@ -17,11 +17,65 @@ abstract public class Unit {
 		this.exp = exp;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+	
+	public int getExp() {
+		return this.exp;
+	}
+	
+	public void setExp(int exp) {
+		this.exp += exp;
+	}
+	
+	public int getOffensivePower() {
+		return this.offensivePower;
+	}
+	
+	public void setOffensivePower(int grade) {
+		this.offensivePower = set(grade, this.offensivePower);
+	}
+	
+	public int getMaxHp() {
+		return this.maxHp;
+	}
+	
+	public int getCurHp() {
+		return this.curHp;
+	}
+	
+	public void setMaxHp(int grade) {
+		this.maxHp = set(grade, this.maxHp);
+		this.curHp = this.maxHp;
+	}
+
+	public void setCurHp(int heal) {
+		if (curHp + heal > maxHp) {
+			this.curHp = this.maxHp;
+			return;
+		}
+		
+		curHp += heal;
+	}
+	
+	public boolean isDead() {
+		return this.isDead;
+	}
+	
 	public void attack(Unit target, int attack) {
 		target.curHp -= attack;
 		checkIsDead(target);
 	}
 
+	private int set(int grade, int myAbility) {
+		if (grade == 2)
+			myAbility *= 1.5;
+		else if (grade == 3)
+			myAbility *= 2;
+		return myAbility;
+	}
+	
 	private void checkIsDead(Unit target) {
 		if (target.curHp <= 0) {
 			target.curHp = 0;
@@ -42,61 +96,7 @@ abstract public class Unit {
 		checkIsDead(this);
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public int getExp() {
-		return this.exp;
-	}
-	
-	public void setExp(int exp) {
-		this.exp += exp;
-	}
-
-	public int getOffensivePower() {
-		return this.offensivePower;
-	}
-
-	public void setOffensivePower(int grade) {
-		this.offensivePower = set(grade, this.offensivePower);
-	}
-	
-	public int getMaxHp() {
-		return this.maxHp;
-	}
-	
-	public int getCurHp() {
-		return this.curHp;
-	}
-	
-	private int set(int grade, int myAbility) {
-		if (grade == 2)
-			myAbility *= 1.5;
-		else if (grade == 3)
-			myAbility *= 2;
-		return myAbility;
-	}
-
-	public void setMaxHp(int grade) {
-		this.maxHp = set(grade, this.maxHp);
-		this.curHp = this.maxHp;
-	}
-
 	abstract public int skill(Unit target);
-
-	public void setCurHp(int heal) {
-		if (curHp + heal > maxHp) {
-			this.curHp = this.maxHp;
-			return;
-		}
-
-		curHp += heal;
-	}
-
-	public boolean isDead() {
-		return this.isDead;
-	}
 
 	public void levelUp(int maxExp) {
 		this.exp -= maxExp;

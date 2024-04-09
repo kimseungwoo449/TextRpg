@@ -16,22 +16,7 @@ abstract public class Hero extends Unit {
 		this.maxExp = 100;
 		this.armor = 0;
 	}
-
-	public void reciveExp(int exp) {
-		super.setExp(exp);
-	}
-
-	public String checkLevelUp() {
-		String info = null;
-		if (super.getExp() >= maxExp) {
-			this.lv += 1;
-			super.levelUp(maxExp);
-			this.maxExp *= 1.5;
-			info = String.format("%s[%s] Level Up!", stringOfThisGradeAndLevel(), this.getName());
-		}
-		return info;
-	}
-
+	
 	public int getGrade() {
 		return this.grade;
 	}
@@ -62,6 +47,21 @@ abstract public class Hero extends Unit {
 
 	public void setMaxExp(int maxExp) {
 		this.maxExp = maxExp;
+	}
+	
+	public void reciveExp(int exp) {
+		super.setExp(exp);
+	}
+
+	public String checkLevelUp() {
+		String info = null;
+		if (super.getExp() >= maxExp) {
+			this.lv += 1;
+			super.levelUp(maxExp);
+			this.maxExp *= 1.5;
+			info = String.format("%s[%s] Level Up!", stringOfThisGradeAndLevel(), this.getName());
+		}
+		return info;
 	}
 
 	public void loadAndSet(int lv, int extraPower, int armor, int maxHp, int cupHp, int offensivePower, int maxExp,

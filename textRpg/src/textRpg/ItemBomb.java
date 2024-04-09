@@ -11,17 +11,17 @@ public class ItemBomb extends Item implements Consumable {
 		this.damage = ran.nextInt(20) + 200; // 200~220데미지
 	}
 
-	@Override
-	public void fucntion(Unit target) {
-		target.takeDamage(this.damage);
-	}
-
 	public int getDamage() {
 		return this.damage;
 	}
-
+	
 	public void setDamage(int damage) {
 		this.damage = damage;
+	}
+
+	@Override
+	public void fucntion(Unit target) {
+		target.takeDamage(this.damage);
 	}
 
 	@Override

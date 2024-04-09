@@ -1,7 +1,5 @@
 package textRpg;
 
-import java.util.ArrayList;
-
 public class StageLobby extends Stage {
 	private final int BATTLE = 1;
 	private final int BUY_HERO = 2;
@@ -109,5 +107,4 @@ public class StageLobby extends Stage {
 			runMenu(select);
 		}
 	}
-
 }

@@ -11,6 +11,7 @@ public class StageTitle extends Stage {
 	private final int EXIT = 0;
 	
 	private static StageTitle instance = new StageTitle();
+	
 	private UserManager userManager = UserManager.getInstance();
 	private StageLobby stageLobby = StageLobby.getInstance();
 	private FileManager fileManager = FileManager.getInstance();

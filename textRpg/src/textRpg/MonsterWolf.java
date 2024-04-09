@@ -1,7 +1,6 @@
 package textRpg;
 
 public class MonsterWolf extends Monster{
-	
 	public MonsterWolf( int maxHp, int offensivePower, int exp) {
 		super("늑대", maxHp, offensivePower, exp);
 	}

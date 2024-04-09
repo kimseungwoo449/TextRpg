@@ -3,7 +3,6 @@ package textRpg;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class UnitManager {
 	private final String PATH = "textRpg.";
 	
@@ -12,7 +11,6 @@ public class UnitManager {
 
 	private String heroClassName[];
 	private String monsterClassName[];
-
 
 	private UnitManager() {
 		this.heroClassName = new String[] { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };
@@ -77,7 +75,6 @@ public class UnitManager {
 			}
 			
 		}
-
 		return monsters;
 	}
 }

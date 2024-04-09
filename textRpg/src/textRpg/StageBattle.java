@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class StageBattle extends Stage {
-	private Random ran = new Random();
-
 	private final int ATTACK = 1;
 	private final int SKILL = 2;
 	private final int ITEM = 3;
+
+	private Random ran = new Random();
 
 	private ArrayList<Unit> party;
 	private ArrayList<Unit> monsters;
@@ -395,5 +395,4 @@ public class StageBattle extends Stage {
 		}
 		result();
 	}
-
 }

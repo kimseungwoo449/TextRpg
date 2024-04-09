@@ -83,7 +83,26 @@ public class User {
 		temp.add(myHero.get(thirdHero));
 		parties.put(partyNumber, temp);
 	}
+	
+	public Item getItem(int itemIndex) {
+		if (itemIndex < 0 || itemIndex >= consumableItem.size())
+			return null;
+		Item item = consumableItem.get(itemIndex);
+		consumableItem.remove(itemIndex);
+		return item;
+	}
 
+	public int getConsumableItemSize() {
+		return this.consumableItem.size();
+	}
+
+	public ArrayList<Unit> getParty(int index) {
+		if (index < 1 || index >= partyNumber)
+			return null;
+
+		return parties.get(index);
+	}
+	
 	private ArrayList<Hero> initialHeros() {
 		ArrayList<Hero> temp = new ArrayList<Hero>();
 		String[] className = { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };
@@ -329,25 +348,6 @@ public class User {
 		equipItem.setEquipedHeroIndex(-1);
 
 		Color.greenPrintln("해제완료.");
-	}
-
-	public Item getItem(int itemIndex) {
-		if (itemIndex < 0 || itemIndex >= consumableItem.size())
-			return null;
-		Item item = consumableItem.get(itemIndex);
-		consumableItem.remove(itemIndex);
-		return item;
-	}
-
-	public int getConsumableItemSize() {
-		return this.consumableItem.size();
-	}
-
-	public ArrayList<Unit> getParty(int index) {
-		if (index < 1 || index >= partyNumber)
-			return null;
-
-		return parties.get(index);
 	}
 
 	public String makePartiesInfo() {

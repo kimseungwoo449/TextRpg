@@ -13,7 +13,19 @@ public class ItemArmor extends Item implements Equipable {
 		setNameAndPrice(grade);
 		this.equipedHeroIndex = -1;
 	}
+	
+	public int getGrade() {
+		return this.grade;
+	}
 
+	public int getArmor() {
+		return this.armor;
+	}
+	
+	public void setArmor(int armor) {
+		this.armor = armor;
+	}
+	
 	@Override
 	public void setNameAndPrice(int grade) {
 		if (grade < 1 || grade > 3)
@@ -46,18 +58,6 @@ public class ItemArmor extends Item implements Equipable {
 		}
 	}
 
-	public int getGrade() {
-		return this.grade;
-	}
-
-	public int getArmor() {
-		return this.armor;
-	}
-	
-	public void setArmor(int armor) {
-		this.armor = armor;
-	}
-	
 	@Override
 	public String toString() {
 		String info = String.format("%s 방어력 : %d", super.toString(), this.armor);

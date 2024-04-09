@@ -6,10 +6,10 @@ abstract public class Stage {
 	public Stage(String stageName) {
 		this.stageName = stageName;
 	}
-	
-	abstract public void printMenu();
-	
+
 	public String getStageName() {
 		return this.stageName;
 	}
+	
+	abstract public void printMenu();
 }

@@ -3,7 +3,6 @@ package textRpg;
 import java.util.ArrayList;
 
 public class StageStore extends Stage {
-	private static StageStore instance = new StageStore();
 	private final int CONSUMABLE = 1;
 	private final int EQUIPABLE = 2;
 	private final int CANCLE = 3;
@@ -14,6 +13,8 @@ public class StageStore extends Stage {
 
 	private final int WEAPON = 1;
 	private final int ARMOR = 2;
+
+	private static StageStore instance = new StageStore();
 
 	private boolean isRun;
 

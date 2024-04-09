@@ -1,7 +1,6 @@
 package textRpg;
 
 public class HeroPaladin extends Hero {
-
 	public HeroPaladin(int grade) {
 		super("성기사", 800, 55, grade);
 	}
@@ -14,5 +13,4 @@ public class HeroPaladin extends Hero {
 		super.setCurHp(heal);
 		return heal;
 	}
-
 }
