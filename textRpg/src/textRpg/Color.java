@@ -1,77 +1,73 @@
 package textRpg;
 
-public class Color {
-	public static final String RESET = "\u001B[0m";
-	public static final String BLACK = "\u001B[30m";
-	public static final String RED = "\u001B[31m";
-	public static final String GREEN = "\u001B[32m";
-	public static final String YELLOW = "\u001B[33m";
-	public static final String BLUE = "\u001B[34m";
-	public static final String PURPLE = "\u001B[35m";
-	public static final String CYAN = "\u001B[36m";
-	public static final String WHITE = "\u001B[37m";
-	public static final String BLACK_BACKGROUND = "\u001B[40m";
-	public static final String RED_BACKGROUND = "\u001B[41m";
-	public static final String GREEN_BACKGROUND = "\u001B[42m";
-	public static final String YELLOW_BACKGROUND = "\u001B[43m";
-	public static final String BLUE_BACKGROUND = "\u001B[44m";
-	public static final String PURPLE_BACKGROUND = "\u001B[45m";
-	public static final String CYAN_BACKGROUND = "\u001B[46m";
-	public static final String WHITE_BACKGROUND = "\u001B[47m";
+enum Color {
+	RESET("\u001B[0m"), BLACK("\u001B[30m"), RED("\u001B[31m"), GREEN("\u001B[32m"), YELLOW("\u001B[33m"),
+	BLUE("\u001B[34m"), PURPLE("\u001B[35m"), CYAN("\u001B[36m"), WHITE("\u001B[37m");
+
+	private String code;
+
+	Color(String code) {
+		this.code = code;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
 
 	public static void redPrintln(String message) {
-		System.out.println(RED + message + RESET);
+		System.out.println(Color.RED.getCode() + message + Color.RESET.getCode());
 	}
 
 	public static void greenPrintln(String message) {
-		System.out.println(GREEN + message + RESET);
+		System.out.println(Color.GREEN.getCode() + message + Color.RESET.getCode());
 	}
 
 	public static void whitePrintln(String message) {
-		System.out.println(WHITE + message + RESET);
+		System.out.println(Color.WHITE.getCode() + message + Color.RESET.getCode());
 	}
 
 	public static void bluePrintln(String message) {
-		System.out.println(BLUE + message + RESET);
+		System.out.println(Color.BLUE.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void yellowPrintln(String message) {
-		System.out.println(YELLOW + message + RESET);
+		System.out.println(Color.YELLOW.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void cyanPrintln(String message) {
-		System.out.println(CYAN + message + RESET);
+		System.out.println(Color.CYAN.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void purplePrintln(String message) {
-		System.out.println(PURPLE + message + RESET);
+		System.out.println(Color.PURPLE.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void redPrint(String message) {
-		System.out.print(RED + message + RESET);
+		System.out.print(Color.RED.getCode() + message + Color.RESET.getCode());
 	}
 
 	public static void greenPrint(String message) {
-		System.out.print(GREEN + message + RESET);
+		System.out.print(Color.GREEN.getCode() + message + Color.RESET.getCode());
 	}
 
 	public static void whitePrint(String message) {
-		System.out.print(WHITE + message + RESET);
+		System.out.print(Color.WHITE.getCode() + message + Color.RESET.getCode());
 	}
 
 	public static void bluePrint(String message) {
-		System.out.print(BLUE + message + RESET);
+		System.out.print(Color.BLUE.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void yellowPrint(String message) {
-		System.out.print(YELLOW + message + RESET);
+		System.out.print(Color.YELLOW.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void purplePrint(String message) {
-		System.out.print(PURPLE + message + RESET);
+		System.out.print(Color.PURPLE.getCode() + message + Color.RESET.getCode());
 	}
-	
+
 	public static void cyanPrint(String message) {
-		System.out.print(CYAN + message + RESET);
+		System.out.print(Color.CYAN.getCode() + message + Color.RESET.getCode());
 	}
 }
+
