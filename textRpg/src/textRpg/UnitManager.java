@@ -5,13 +5,14 @@ import java.util.Random;
 
 
 public class UnitManager {
+	private final String PATH = "textRpg.";
+	
 	private static UnitManager instance = new UnitManager();
 	private Random ran = new Random();
 
 	private String heroClassName[];
 	private String monsterClassName[];
 
-	private final String PATH = "textRpg.";
 
 	private UnitManager() {
 		this.heroClassName = new String[] { "HeroWarrior", "HeroWizard", "HeroPaladin", "HeroPrist" };

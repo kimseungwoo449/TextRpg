@@ -16,7 +16,7 @@ public class StageLobby extends Stage {
 
 	private boolean isRun;
 
-	private static UserManager userManager = UserManager.getInstance();
+	private UserManager userManager = UserManager.getInstance();
 	private static StageLobby instance = new StageLobby();
 
 	private StageLobby() {
