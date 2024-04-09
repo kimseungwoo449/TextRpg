@@ -120,8 +120,8 @@ public class User {
 
 		cash += 300 * grade;
 		deleteHeroInEquipableItem(index);
-		this.myHero.remove(index);
 		deleteHeroInParty(targetHero);
+		this.myHero.remove(index);
 
 		return true;
 	}
@@ -185,6 +185,7 @@ public class User {
 			if (i == parties.size())
 				parties.remove(i);
 		}
+		this.partyNumber--;
 		return true;
 	}
 
